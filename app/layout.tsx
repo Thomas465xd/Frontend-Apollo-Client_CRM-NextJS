@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ReactNode } from "react";
 import { Providers } from "./providers";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/home/Sidebar";
+import { Poppins } from "next/font/google";
 
-const geistSans = Geist({
-	variable: "--font-geist-sans",
+const poppins = Poppins({
+	weight: ["400", "600", "700"], // or whichever weights you need
 	subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-	variable: "--font-geist-mono",
-	subsets: ["latin"],
+	variable: "--font-poppins",
 });
 
 export const metadata: Metadata = {
@@ -27,22 +23,20 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<body
-				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-			>
-                <Providers>
-                    <div className="md:flex min-h-screen">
-                        {/* Sidebar with Fixed Position on Small Screens */}
-                        <aside className="md:w-72 xl:w-1/5 bg-gray-800 md:sticky md:top-0 md:h-screen">
-                            <Sidebar />
-                        </aside>
+			<body className={`${poppins.variable} font-sans antialiased`}>
+				<Providers>
+					<div className="md:flex min-h-screen">
+						{/* Sidebar with Fixed Position on Small Screens */}
+						<aside className="md:w-72 xl:w-1/5 bg-gray-800 md:sticky md:top-0 md:h-screen md:border-r-4 md:dark:border-gray-700 md:border-slate-500 md:dark:border-r-2">
+							<Sidebar />
+						</aside>
 
-                        {/* Main Content */}
-                        <main className="flex-1 h-screen overflow-y-scroll bg-gray-100 dark:bg-gray-900 p-5 pb-96 md:pb-5">
-                            {children}
-                        </main>
-                    </div>
-                </Providers>
+						{/* Main Content */}
+						<main className="flex-1 h-screen overflow-y-scroll bg-slate-300 dark:bg-gray-900 p-5 pb-96 md:pb-5">
+							{children}
+						</main>
+					</div>
+				</Providers>
 			</body>
 		</html>
 	);
