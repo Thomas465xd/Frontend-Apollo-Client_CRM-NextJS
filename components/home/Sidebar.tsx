@@ -3,10 +3,10 @@ import Logo from "../ui/Logo"
 import SidebarRoute from "./SidebarRoute"
 
 const sidebarNavigation = [
-    {url: '/', text: 'Home', blank: false},
-    {url: '/orders', text: 'Orders', blank: false},
-    {url: '/products', text: 'Products', blank: false},
-    {url: '/clients', text: 'See Clients', blank: false},
+    {url: '/home', text: 'Home', blank: false},
+    {url: '/home/orders', text: 'Orders', blank: false},
+    {url: '/home/products', text: 'Products', blank: false},
+    {url: '/home/clients', text: 'See Clients', blank: false},
 ]
 
 export default function Sidebar() {
@@ -15,17 +15,25 @@ export default function Sidebar() {
         <>
             <Logo />
             <div className="space-y-3 ">
-                <p className="mt-10 uppercase font-bold text-sm text-gray-600 text-center">Navigation</p>
-                <nav className="flex flex-col items-center mt-5">
-                    {sidebarNavigation.map((link) => (
-                        <SidebarRoute
-                            key={link.url}
-                            link={link}
-                        />
-                    ))}
-                </nav>
+                <div className="">
+                    <p className="mt-10 uppercase font-bold text-sm text-gray-600 text-center">Navigation</p>
+                    <nav className="flex flex-col items-center mt-5">
+                        {sidebarNavigation.map((link) => (
+                            <SidebarRoute
+                                key={link.url}
+                                link={link}
+                            />
+                        ))}
 
-                <DarkMode />
+                        <div className="">
+                            <p className="uppercase font-bold text-sm text-gray-600 text-center">My Account</p>
+                        </div>
+
+                        <div className="fixed bottom-5">
+                            <DarkMode />
+                        </div>
+                    </nav>
+                </div>
             </div>
         </>
 

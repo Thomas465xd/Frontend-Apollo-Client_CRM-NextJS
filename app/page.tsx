@@ -1,10 +1,8 @@
+import { redirect } from "next/navigation";
+
 export default function Home() {
 
 	return (
-		<div className="p-6 m-4 border border-gray-300 dark:border-gray-700 rounded-lg">
-            <h2 className="text-3xl font-bold text-center">
-                Welcome to Client CRM Next
-            </h2>
-		</div>
+        redirect("/auth/login")
 	);
 }
