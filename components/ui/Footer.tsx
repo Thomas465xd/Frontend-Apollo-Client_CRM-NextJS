@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-        <footer className="flex justify-between bg-gray-900 border-t-2 border-blue-500 dark:border-gray-700">
+        <footer className="flex justify-between bg-gray-900 border-t-2 border-gray-700">
             <p className="text-center p-4 text-gray-400">Client CRM Next - Copyright &copy; {new Date().getFullYear()}</p>
             <p className="text-center p-4 text-gray-400 text-sm">Developed by {' '}
                 <a 
