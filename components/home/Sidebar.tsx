@@ -1,5 +1,4 @@
 import DarkMode from "../ui/DarkMode"
-import Logo from "../ui/Logo"
 import SidebarRoute from "./SidebarRoute"
 
 const sidebarNavigation = [
@@ -13,7 +12,12 @@ export default function Sidebar() {
 
     return (
         <>
-            <Logo />
+            <div className="text-2xl pt-5 pb-2 px-10 border-b-2 border-blue-500 dark:border-gray-600">
+                <h1 className="text-white text-center">
+                    <span className="text-blue-500 font-semibold">Next</span> CRM
+                </h1>
+            </div>
+
             <div className="space-y-3 ">
                 <div className="">
                     <p className="mt-10 uppercase font-bold text-sm text-gray-600 text-center">Navigation</p>

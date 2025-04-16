@@ -7,7 +7,7 @@ export default function page() {
         <>
             <Logo />
             <div className="bg-white p-8 rounded-xl shadow-xl w-full max-w-md mt-10">
-                <Header>Login</Header>
+                <Header>Forgot Password</Header>
             </div>
             <div className="flex flex-col items-center gap-5 mt-5">
                 <a 
@@ -20,10 +20,10 @@ export default function page() {
 
                 <a 
                     className='text-blue-500 hover:text-blue-600 transition-colors duration-200 text-sm'
-                    href="/auth/forgot"
+                    href="/auth/login"
                 >
-                    Forgot your password? {' '}
-                    <span className='font-semibold'>Reset </span>
+                    Already have an account? {' '}
+                    <span className='font-semibold'>Log in here</span>
                 </a>
             </div>
         </>
