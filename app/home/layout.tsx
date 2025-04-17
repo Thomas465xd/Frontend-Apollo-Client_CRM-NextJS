@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { Providers } from "../providers";
+import { Providers } from "../../components/providers/ThemeProvider";
 import Sidebar from "@/components/home/Sidebar";
 import Footer from "@/components/ui/Footer";
 

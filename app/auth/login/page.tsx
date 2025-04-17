@@ -1,3 +1,4 @@
+import LoginForm from '@/components/auth/LoginForm'
 import Header from '@/components/ui/Header'
 import Logo from '@/components/ui/Logo'
 import React from 'react'
@@ -14,54 +15,9 @@ export default function page() {
                     <span className='font-semibold text-blue-500'>Next CRM</span>
                 </p>
 
-                <form 
-                    className="mt-5 space-y-5 bg-white shadow-lg rounded-lg p-6 lg:p-10 border border-gray-200"
-                >
-                    <div className="grid grid-cols-1 gap-5">
-                        <div className="space-y-2">
-                            <label 
-                                htmlFor="email"
-                                className='block text-gray-700 text-sm font-bold mb-2'
-                            >
-                                Email
-                            </label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="email"
-                                placeholder='Enter your registered account email'
-                                className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-
-                        <div className="space-y-2">
-                            <label 
-                                htmlFor="password"
-                                className='block text-gray-700 text-sm font-bold mb-2'
-                            >
-                                Password
-                            </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder='Enter your registered account password'
-                                className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
-                            />
-                        </div>
-
-                        <div className="border-t rounded border-gray-400"></div>
-                        <p className="text-sm text-gray-400">
-                            <span className="text-red-500">*</span> To Login you must have your registered email address confirmed 
-                        </p>
-
-                        <input
-                            type="submit"
-                            value='Login'
-                            className="bg-slate-800 hover:bg-slate-900 w-full p-3  text-white font-black  text-md cursor-pointer rounded"
-                        />
-                    </div>
-                </form>
+                <div className="mt-5 p-[4px] bg-gradient-to-br from-slate-700 via-blue-500 to-slate-800 rounded-lg shadow-xl">
+                    <LoginForm />
+                </div>
                 
                 <div className="flex flex-col items-center gap-5 mt-5 mb-5">
                     <a 
