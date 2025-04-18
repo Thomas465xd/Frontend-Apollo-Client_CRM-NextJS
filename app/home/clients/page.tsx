@@ -1,10 +1,12 @@
-export default function Clients() {
+import ClientTable from "@/components/home/clients/ClientTable";
+import Title from "@/components/ui/Title";
 
+export default function Clients() {
 	return (
-		<div className="p-6 m-4 dark:border dark:border-gray-700 border-b border-gray-400 dark:rounded-lg">
-            <h2 className="text-3xl font-bold text-center">
-                Orders
-            </h2>
-		</div>
+        <div className="">
+            <Title>Your Clients</Title>
+
+            <ClientTable />
+        </div>
 	);
 }

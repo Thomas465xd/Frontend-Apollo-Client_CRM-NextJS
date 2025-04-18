@@ -38,8 +38,12 @@ export default function Sidebar() {
                         ))}
 
                         <div className="">
-                            <p className="uppercase font-bold text-sm text-gray-600 text-center">My Account</p>
+                            <p className="uppercase font-bold text-sm text-gray-600 text-center pt-5">My Account</p>
                         </div>
+
+                        <SidebarRoute
+                            link={{url: '/home/profile', text: 'Profile', blank: false}}
+                        />
 
                         <button
                             className="mt-5 bg-slate-800 hover:bg-slate-900 w-full p-3 text-red-300 font-black text-md cursor-pointer transition-colors duration-300"
