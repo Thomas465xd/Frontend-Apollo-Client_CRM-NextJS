@@ -22,7 +22,7 @@ export default function RootLayout({
                     {/* Main Content Area containing both content and footer */}
                     <div className="flex-1 flex flex-col">
                         {/* Content */}
-                        <div className="flex-1 bg-slate-300 dark:bg-gray-900 p-5 overflow-y-auto">
+                        <div className="flex-1 bg-slate-200 dark:bg-gray-900 p-5 overflow-y-auto">
                             {children}
                         </div>
                         

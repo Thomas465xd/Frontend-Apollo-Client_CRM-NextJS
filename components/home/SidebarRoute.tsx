@@ -17,7 +17,7 @@ export default function SidebarRoute({link} : RouteProps) {
 
     return (
         <Link
-            className={`${isActive && "bg-slate-900 hover:bg-gray-950 transition-colors"} font-bold text-md p-3 last-of-type:mb-5 border-slate-700 w-full text-center text-white`}
+            className={`${isActive && "bg-slate-900 hover:bg-gray-950 transition-colors border-y border-gray-700"} hover:bg-slate-900 font-bold text-md p-3 last-of-type:mb-5 border-slate-700 w-full text-center text-white transition-colorrs duration-300`}
             href={link.url}
             target={link.blank ? "_blank" : ""}
         >

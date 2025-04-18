@@ -9,9 +9,9 @@ export default function page() {
             <Logo />
 
             <div className="mx-auto max-w-xl px-4 lg:px-0 mt-10">
-                <Header white xl left>Create Account</Header>
+                <Header white xl left>Sign In </Header>
                 <p className="mt-2 text-sm text-gray-400">
-                    Register your account in {' '}
+                    Sign in to your account in {' '}
                     <span className='font-semibold text-blue-500'>Next CRM</span>
                 </p>
 

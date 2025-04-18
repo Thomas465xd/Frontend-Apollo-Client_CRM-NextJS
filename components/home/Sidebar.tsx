@@ -1,3 +1,6 @@
+"use client"
+
+import { redirect } from "next/navigation";
 import DarkMode from "../ui/DarkMode"
 import SidebarRoute from "./SidebarRoute"
 
@@ -9,6 +12,11 @@ const sidebarNavigation = [
 ]
 
 export default function Sidebar() {
+
+    const logout = () => {
+        localStorage.removeItem('AUTH_TOKEN');
+        redirect('/auth/login');
+    };
 
     return (
         <>
@@ -32,6 +40,14 @@ export default function Sidebar() {
                         <div className="">
                             <p className="uppercase font-bold text-sm text-gray-600 text-center">My Account</p>
                         </div>
+
+                        <button
+                            className="mt-5 bg-slate-800 hover:bg-slate-900 w-full p-3 text-red-300 font-black text-md cursor-pointer transition-colors duration-300"
+                            type="button"
+                            onClick={logout}
+                        >
+                            Logout
+                        </button>
 
                         <div className="fixed bottom-5">
                             <DarkMode />

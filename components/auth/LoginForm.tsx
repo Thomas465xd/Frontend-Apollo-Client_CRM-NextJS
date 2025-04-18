@@ -1,29 +1,81 @@
-"use client"
+"use client";
 import { LoginUserForm } from "@/src/types";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ui/ErrorMessage";
+import { ApolloError, gql, useMutation } from "@apollo/client";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
+
+const LOGIN_USER = gql`
+    mutation AuthUser($input: AuthInput) {
+        authenticateUser(input: $input) {
+            token
+        }
+    }
+`
 
 export default function LoginForm() {
 
-    const initialValues : LoginUserForm = {
-        email: "", 
-        password: ""
-    }
+    const router = useRouter();
 
-    const { register, handleSubmit, reset, formState: { errors } } = useForm({
-        defaultValues: initialValues
-    })
+	const initialValues: LoginUserForm = {
+		email: "",
+		password: "",
+	};
 
-    const handleLogin = (formData: LoginUserForm) => {
-        console.log(formData)
-    }
+	const {
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm({
+		defaultValues: initialValues,
+	});
+
+    const [ loginUser ] = useMutation(LOGIN_USER)
+
+	const handleLogin = async (formData: LoginUserForm) => {
+        const { email, password } = formData;
+
+        try {
+            const { data } = await loginUser({
+                variables: {
+                    input: {
+                        email: email,
+                        password: password,
+                    },
+                },
+            });  
+            
+            // Login Successful
+            reset(initialValues);
+
+            // Set the Auth token in local storage
+            if(data.authenticateUser) {
+                const { token } = data.authenticateUser;
+                localStorage.setItem("AUTH_TOKEN", token); // Store token in local storage
+                toast.success("Login successful!");
+
+                // redirect to home page
+                // router.push("/home"); // This will not work in server components
+                //! redirect("/home"); // This will not work in client components
+                router.push("/home");
+            }
+        } catch (error) {
+            if (error instanceof ApolloError) {
+                toast.error(error.message);
+            } else {
+                toast.error("Unexpected error");
+            }
+        }
+	};
 
 	return (
-		<form 
-            className="space-y-5 bg-white rounded-lg p-6 lg:p-10"
-            onSubmit={handleSubmit(handleLogin)}
-            noValidate
-        >
+		<form
+			className="space-y-5 bg-white rounded-lg p-6 lg:p-10"
+			onSubmit={handleSubmit(handleLogin)}
+			noValidate
+		>
 			<div className="grid grid-cols-1 gap-5">
 				<div className="space-y-2">
 					<label
@@ -36,16 +88,18 @@ export default function LoginForm() {
 						type="email"
 						id="email"
 						placeholder="Enter your registered account email"
-						className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
-                        {...register("email", {
-                            required: "Email is required", 
-                            pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: "Invalid email address"
-                            }
-                        })}
-                    />
-                    {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+						className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-gray-700"
+						{...register("email", {
+							required: "Email is required",
+							pattern: {
+								value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+								message: "Invalid email address",
+							},
+						})}
+					/>
+					{errors.email && (
+						<ErrorMessage>{errors.email.message}</ErrorMessage>
+					)}
 				</div>
 
 				<div className="space-y-2">
@@ -59,16 +113,19 @@ export default function LoginForm() {
 						type="password"
 						id="password"
 						placeholder="Enter your registered account password"
-						className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500"
-                        {...register("password", {
-                            required: "Password is required",
-                            minLength: {
-                                value: 8,
-                                message: "Password must be at least 8 characters"
-                            }
-                        })}
+						className="w-full p-2 rounded border border-gray-300 focus:outline-none focus:border-blue-500 text-gray-700"
+						{...register("password", {
+							required: "Password is required",
+							minLength: {
+								value: 8,
+								message:
+									"Password must be at least 8 characters",
+							},
+						})}
 					/>
-                    {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+					{errors.password && (
+						<ErrorMessage>{errors.password.message}</ErrorMessage>
+					)}
 				</div>
 
 				<div className="border-t rounded border-gray-400"></div>
