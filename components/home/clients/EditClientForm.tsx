@@ -6,6 +6,7 @@ import { User, Building2, Mail, Phone, Briefcase, MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import Swal from "sweetalert2";
 
 const CREATE_CLIENT = gql`
     mutation createClient($input: ClientInput) {
@@ -34,7 +35,7 @@ const GET_SELLER_CLIENTS = gql`
 	}
 `;
 
-export default function CreateClientForm() {
+export default function EditClientForm() {
 
     const router = useRouter();
 

@@ -1,14 +1,17 @@
 "use client";
 import Loader from "@/components/ui/Loader";
-import { gql, useQuery } from "@apollo/client";
+import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Search, UserCircle, Building, Mail, Edit } from "lucide-react";
 import { copyToClipboard } from "@/src/utils/copy";
-import { RegisterClientForm } from "@/src/types";
+import { ClientInput, RegisterClientForm } from "@/src/types";
+import { toast } from "react-toastify";
+import Swal, { SweetAlertTheme } from "sweetalert2";
+import { redirect } from "next/navigation";
 
-const GET_CLIENTS = gql`
-	query getClients {
-		getClients {
+const GET_SELLER_CLIENTS = gql`
+	query getSellerClients {
+		getSellerClients {
 			id
 			name
 			surname
@@ -18,9 +21,41 @@ const GET_CLIENTS = gql`
 	}
 `;
 
+const DELETE_CLIENT = gql`
+    mutation deleteClient($id: ID!) {
+        deleteClient(id: $id)
+    }
+`;
+
 export default function ClientTable() {
 	// Query to get all clients
-	const { data, loading, error } = useQuery(GET_CLIENTS);
+	const { data, loading, error } = useQuery(GET_SELLER_CLIENTS);
+
+    // Mutation to delete a client
+    const [deleteClient] = useMutation(DELETE_CLIENT, {
+        update(cache, { data }, { variables }) {
+            if (!data || !variables?.id) return;
+    
+            // Read existing data
+            const existing = cache.readQuery<{ getSellerClients: ClientInput[] }>({
+                query: GET_SELLER_CLIENTS,
+            });
+    
+            if (existing) {
+                // Write new data without the deleted client
+                cache.writeQuery({
+                    query: GET_SELLER_CLIENTS,
+                    data: {
+                        getSellerClients: existing.getSellerClients.filter(
+                            (client) => client.id !== variables.id
+                        ),
+                    },
+                });
+            }
+        },
+    });
+    
+
 	const [searchTerm, setSearchTerm] = useState("");
 
 	if (loading) return <Loader />;
@@ -34,7 +69,7 @@ export default function ClientTable() {
 
 	// Filter clients based on search term
 	const filteredClients =
-		data?.getClients.filter(
+		data?.getSellerClients.filter(
 			(client: RegisterClientForm) =>
 				client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
 				client.surname
@@ -45,6 +80,47 @@ export default function ClientTable() {
 					.includes(searchTerm.toLowerCase()) ||
 				client.email.toLowerCase().includes(searchTerm.toLowerCase())
 		) || [];
+
+    // Function to handle the deletion of a client
+    const handleDeleteClient = async (id: string) => {
+        try {
+            Swal.fire({
+                title: "Are you sure?", 
+                text: "You won't be able to revert this action!", 
+                icon: "warning",
+                showCancelButton: true, 
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+                theme: `${localStorage.getItem("theme") as SweetAlertTheme}`
+            }).then(async (result) => {
+                try {
+                    if(result.isConfirmed) {
+                        const { data } = await deleteClient({
+                            variables: {
+                                id
+                            }
+                        })
+
+                        Swal.fire({
+                            title: "Deleted 🎉",
+                            text: data.deleteClient,
+                            icon: "success",
+                            theme: `${localStorage.getItem("theme") as SweetAlertTheme}`  
+                        })
+                    }
+                } catch (error) {
+                    if (error instanceof ApolloError) {
+                        toast.error(error.message);
+                    } else {
+                        toast.error("Unexpected error");
+                    }
+                }
+            })
+        } catch {
+            toast.error("Error deleting client");
+        }
+    }
 
 	return (
 		<div className="overflow-hidden rounded-xl shadow-lg border border-slate-200 dark:border-slate-700">
@@ -147,11 +223,17 @@ export default function ClientTable() {
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
 											<div className="flex items-center gap-5">
-												<button className="text-blue-500 hover:text-blue-700 transition-colors duration-300">
+												<button 
+                                                    className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                                                    onClick={() => redirect(`/home/clients/edit/${client.id}`)}
+                                                >
 													Edit
 												</button>
 
-												<button className="text-red-700 hover:text-red-900 transition-colors duration-300">
+												<button 
+                                                    className="text-red-700 hover:text-red-900 transition-colors duration-300"
+                                                    onClick={() => handleDeleteClient(client.id ?? "")}
+                                                >
 													Delete
 												</button>
 											</div>
@@ -178,7 +260,7 @@ export default function ClientTable() {
 			<div className="bg-slate-50 dark:bg-slate-800 px-6 py-3 border-t border-slate-200 dark:border-slate-700">
 				<p className="text-xs text-slate-500 dark:text-slate-400">
 					Showing {filteredClients.length} of{" "}
-					{data?.getClients.length || 0} clients
+					{data?.getSellerClients.length || 0} clients
 				</p>
 			</div>
 		</div>
