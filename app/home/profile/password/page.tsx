@@ -1,14 +1,11 @@
 import ResetPasswordForm from "@/components/home/profile/ResetPasswordForm";
+import Title from "@/components/ui/Title";
 
 export default function ResetPassword() {
 
     return (
         <div className="">
-            <div className="p-6 m-4">
-                <h2 className="text-3xl font-bold text-center">
-                    Reset Your Password
-                </h2>
-            </div>
+            <Title withoutBorder>Reset your Password</Title>
     
             <ResetPasswordForm />
         </div>

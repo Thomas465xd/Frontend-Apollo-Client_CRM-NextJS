@@ -24,7 +24,9 @@ export const clientSchema = z.object({
     name: z.string(),
     surname: z.string(),
     businessName: z.string(),
+    role: z.string().optional(), 
     email: z.string().email(),
+    phone: z.string().optional(),
 })
 
 // Auth Types
@@ -33,4 +35,4 @@ export type LoginUserForm = z.infer<typeof loginSchema>
 export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>
 
 // Client Types
-export type ClientForm = z.infer<typeof clientSchema>
+export type RegisterClientForm = z.infer<typeof clientSchema>

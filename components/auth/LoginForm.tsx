@@ -63,7 +63,6 @@ export default function LoginForm() {
             }
         } catch (error) {
             if (error instanceof ApolloError) {
-                console.log(error);
                 toast.error(error.message);
             } else {
                 toast.error("Unexpected error");

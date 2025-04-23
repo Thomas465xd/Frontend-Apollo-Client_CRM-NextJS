@@ -6,9 +6,9 @@ import SidebarRoute from "./SidebarRoute"
 
 const sidebarNavigation = [
     {url: '/home', text: 'Home', blank: false},
-    {url: '/home/orders', text: 'Orders', blank: false},
+    {url: '/home/clients', text: 'Clients', blank: false},
     {url: '/home/products', text: 'Products', blank: false},
-    {url: '/home/clients', text: 'See Clients', blank: false},
+    {url: '/home/orders', text: 'Orders', blank: false},
 ]
 
 export default function Sidebar() {

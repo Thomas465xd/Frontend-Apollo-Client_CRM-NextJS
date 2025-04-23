@@ -1,7 +1,6 @@
 import ForgotPasswordForm from '@/components/auth/ForgotPasswordForm'
 import Header from '@/components/ui/Header'
 import Logo from '@/components/ui/Logo'
-import React from 'react'
 
 export default function page() {
     return (
