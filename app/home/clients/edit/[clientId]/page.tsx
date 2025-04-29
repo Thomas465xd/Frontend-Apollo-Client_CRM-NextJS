@@ -2,7 +2,10 @@ import EditClientForm from "@/components/home/clients/EditClientForm";
 import Title from "@/components/ui/Title";
 import Link from "next/link";
 
-export default function ClientsEdit() {
+export default async function ClientsEdit({ params }: { params: { clientId: string } }) {
+
+    const { clientId } = await params; // Extract clientId from params
+
     return (
         <div className="">
             <Title>Edit Client</Title>
@@ -17,7 +20,7 @@ export default function ClientsEdit() {
                 </p>
             </div>
 
-            <EditClientForm />
+            <EditClientForm clientId={clientId} />
         </div>
     );
 }

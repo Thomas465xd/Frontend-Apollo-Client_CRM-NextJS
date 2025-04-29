@@ -1,5 +1,6 @@
 "use client";
 import ErrorMessage from "@/components/ui/ErrorMessage";
+import FormPreset from "@/components/ui/FormPreset";
 import { ClientInput, RegisterClientForm } from "@/src/types";
 import { ApolloError, gql, useMutation } from "@apollo/client";
 import { User, Building2, Mail, Phone, Briefcase, MapPin } from "lucide-react";
@@ -85,7 +86,6 @@ export default function CreateClientForm() {
     const {
         register,
         handleSubmit,
-        watch,
         reset,
         formState: { errors },
     } = useForm({
@@ -113,39 +113,28 @@ export default function CreateClientForm() {
             // User created successfully
             reset(initialValues); // Reset form values
             if(data?.createClient) {
-                toast.success("Client created successfully 🎉");
+                toast.success("Client created successfully 🎉", {
+                    theme: `${localStorage.getItem("theme")}`,
+                });
 
                 // redirect to login page
                 router.push("/home/clients");
             }
         } catch (error) {
             if (error instanceof ApolloError) {
-                toast.error(error.message);
+                toast.error(error.message, {
+                    theme: `${localStorage.getItem("theme")}`,
+                });
             } else {
-                toast.error("Unexpected error");
+                toast.error("Unexpected error", {
+                    theme: `${localStorage.getItem("theme")}`,
+                });
             }
         }
     };
 
 	return (
-		<div className="max-w-3xl mx-auto mb-10 mt-5 p-[4px] bg-gradient-to-br dark:from-blue-800 from-blue-200 via-blue-500 to-blue-200 dark:to-blue-900 rounded-xl shadow-xl">
-			<div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden">
-				{/* Form Header */}
-				<div className="bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-5">
-					<div className="flex items-center space-x-3">
-						<div className="bg-blue-500 p-2 rounded-full">
-							<User size={20} className="text-white" />
-						</div>
-						<h2 className="text-white font-semibold text-lg">
-							Create New Client
-						</h2>
-					</div>
-					<p className="text-slate-300 text-sm mt-1 ml-10">
-						Add a new client to your CRM system
-					</p>
-				</div>
-
-				{/* Form Content */}
+            <FormPreset title="Register Client" subtitle="Add a Client to your CRM System" icon={User}>
 				<div className="p-6 lg:p-8">
 					<form 
                         className="space-y-8"
@@ -439,7 +428,6 @@ export default function CreateClientForm() {
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
+        </FormPreset>
 	);
 }

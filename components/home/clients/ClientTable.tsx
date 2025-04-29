@@ -8,6 +8,7 @@ import { ClientInput, RegisterClientForm } from "@/src/types";
 import { toast } from "react-toastify";
 import Swal, { SweetAlertTheme } from "sweetalert2";
 import { redirect } from "next/navigation";
+import Dialog from "@/components/ui/Dialog";
 
 const GET_SELLER_CLIENTS = gql`
 	query getSellerClients {
@@ -197,9 +198,7 @@ export default function ClientTable() {
 												}
 											>
 												{client.name}
-												<span className="absolute left-3 -top-3 bg-gray-600 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-													More Info
-												</span>
+                                                <Dialog>More Info</Dialog>
 											</span>
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700 dark:text-slate-200">
@@ -216,9 +215,7 @@ export default function ClientTable() {
 												}
 											>
 												{client.email}
-												<span className="absolute left-5 -top-3 bg-gray-600 text-white text-xs rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap pointer-events-none">
-													Copy to Clipboard
-												</span>
+                                                <Dialog>Copy To Clipboard</Dialog>
 											</span>
 										</td>
 										<td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">

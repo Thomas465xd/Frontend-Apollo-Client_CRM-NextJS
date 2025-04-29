@@ -1,24 +1,10 @@
+import FormPreset from '@/components/ui/FormPreset'
 import { FingerprintIcon, Key } from 'lucide-react'
 import React from 'react'
 
 export default function ResetPasswordForm() {
     return (
-		<div className="max-w-3xl mx-auto mt-5 p-[4px] bg-gradient-to-br from-slate-700 via-blue-500 to-slate-800 rounded-xl shadow-xl">
-			{/* Form Card */}
-			<div className="bg-white dark:bg-slate-800 rounded-xl shadow-xl overflow-hidden">
-				{/* Header */}
-				<div className="bg-gradient-to-r from-slate-800 to-slate-700 px-6 py-5">
-					<div className="flex items-center space-x-3">
-						<div className="bg-blue-500 p-2 rounded-full">
-							<Key size={20} className="text-white" />
-						</div>
-						<h2 className="text-white font-semibold text-lg">
-							Account Password
-						</h2>
-					</div>
-				</div>
-
-				{/* Form Content */}
+        <FormPreset title="Reset Password" subtitle="Complete the form to change your password" icon={Key}>
 				<div className="p-6">
 					<form className="space-y-6">
 						<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -98,7 +84,6 @@ export default function ResetPasswordForm() {
 						</div>
 					</form>
 				</div>
-			</div>
-		</div>
+        </FormPreset>
     )
 }
