@@ -156,200 +156,51 @@ export default function CreateProductForm() {
 
     return (
         <FormPreset title="Create Product" subtitle="Complete the form to register a new Product" icon={PackageCheck}>
-            <div className="p-6 lg:p-8">
-                <form
-                    className="space-y-8"
-                    noValidate
-                    suppressHydrationWarning
-                    onSubmit={handleSubmit(handleRegister)}
-                >
-                    <div className="">
-                        <h3 className="text-sm uppercase text-gray-500 dark:text-gray-400 font-medium mb-4 border-b pb-2">
-                            Product Info
-                        </h3>
+            <form
+                className="space-y-8"
+                noValidate
+                suppressHydrationWarning
+                onSubmit={handleSubmit(handleRegister)}
+            >
+                <div className="">
+                    <h3 className="text-sm uppercase text-gray-500 dark:text-gray-400 font-medium mb-4 border-b pb-2">
+                        Product Info
+                    </h3>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div className="">
-                                <label 
-                                    htmlFor="name"
-                                    className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
-                                >
-                                    Name {" "}
-                                    <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative mb-5">
-                                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <Tag
-                                            size={16}
-                                            className="text-gray-400"
-                                        />
-                                    </div>
-                                    <input 
-                                        type="text" 
-                                        id="name"
-                                        placeholder="Enter Product Name"
-                                        className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
-                                        bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
-                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                                        shadow-sm transition-all"
-                                        {...register("name", {
-                                            required: "Name cannot be empty", 
-                                        })}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="">
+                            <label 
+                                htmlFor="name"
+                                className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
+                            >
+                                Name {" "}
+                                <span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative mb-5">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <Tag
+                                        size={16}
+                                        className="text-gray-400"
                                     />
                                 </div>
-                                {errors.name && (
-                                    <ErrorMessage variant="inline">
-                                        {errors.name.message}
-                                    </ErrorMessage>
-                                )}
+                                <input 
+                                    type="text" 
+                                    id="name"
+                                    placeholder="Enter Product Name"
+                                    className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
+                                    bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                                    shadow-sm transition-all"
+                                    {...register("name", {
+                                        required: "Name cannot be empty", 
+                                    })}
+                                />
                             </div>
-
-                            <div className="">
-                                <label 
-                                    htmlFor="name"
-                                    className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
-                                >
-                                    Stock Available {" "}
-                                    <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative mb-5">
-                                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <Boxes
-                                            size={16}
-                                            className="text-gray-400"
-                                        />
-                                    </div>
-                                    <input 
-                                        type="number" 
-                                        id="stock"
-                                        placeholder="Enter Product Stock"
-                                        className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
-                                        bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
-                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                                        shadow-sm transition-all"
-                                        {...register("stock", {
-                                            required: "Stock cannot be empty",
-                                            validate: {
-                                                positive: (value) => value > 0 || "Stock must be greater than 0",
-                                                integer: (value) => Number.isInteger(Number(value)) || "Stock must be an integer",
-                                            }
-                                        })}
-                                        onChange={(e) => {
-                                            const raw = e.target.value.replace(/[^0-9]/g, "");
-                                            const numeric = parseFloat(raw);
-                                            if (!isNaN(numeric)) {
-                                                setValue("stock", numeric);
-                                            }
-                                        }}
-                                    />
-                                </div>
-                                {errors.stock && (
-                                    <ErrorMessage variant="inline">
-                                        {errors.stock.message}
-                                    </ErrorMessage>
-                                )}
-                            </div>
-
-                            <div className="">
-                                <label 
-                                    htmlFor="name"
-                                    className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
-                                >
-                                    Price (USD) {" "}
-                                    <span className="text-red-500">*</span>
-                                </label>
-                                <div className="relative mb-5">
-                                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <DollarSign
-                                            size={16}
-                                            className="text-gray-400"
-                                        />
-                                    </div>
-                                    <input 
-                                        type="number" 
-                                        id="price"
-                                        placeholder="Enter Product Price (USD)"
-                                        className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
-                                        bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
-                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                                        shadow-sm transition-all"
-                                        {...register("price", {
-                                            required: "Price cannot be empty", 
-                                            validate: (value) => value > 0 || "Price must be greater than 0",
-                                            valueAsNumber: true
-                                        })}
-                                        onChange={(e) => {
-                                            const raw = e.target.value.replace(/[^0-9.]/g, "");
-                                            const numeric = parseFloat(raw);
-                                        
-                                            if (!isNaN(numeric)) {
-                                                setValue("price", numeric);
-                                                setFormattedPrice(formatPriceToUSD(numeric));
-                                        
-                                                // Recalculate discount price if discount exists
-                                                const currentDiscount = getValues("discount") ?? 0;
-                                                updatePriceWithDiscount(numeric, currentDiscount);
-                                            } else {
-                                                setFormattedPrice("");
-                                                setValue("price", 0);
-                                                updatePriceWithDiscount(0, getValues("discount") ?? 0);
-                                            }
-                                        }}              
-                                    />
-                                </div>
-                                {errors.price && (
-                                    <ErrorMessage variant="inline">
-                                        {errors.price.message}
-                                    </ErrorMessage>
-                                )}
-                            </div>
-
-                            <div className="">
-                                <label 
-                                    htmlFor="name"
-                                    className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
-                                >
-                                    Discount (%) {" "}
-                                </label>
-                                <div className="relative mb-5">
-                                    <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <BadgePercent
-                                            size={16}
-                                            className="text-gray-400"
-                                        />
-                                    </div>
-                                    <input 
-                                        type="text"
-                                        inputMode="numeric"
-                                        id="discount"
-                                        placeholder="Enter Discount Percentage"
-                                        className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
-                                        bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
-                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
-                                        shadow-sm transition-all"
-                                        value={formattedDiscount}
-                                        onChange={handleDiscountChange}
-                                        onBlur={handleDiscountBlur}
-                                        onFocus={handleDiscountFocus}
-                                    />
-
-                                    <input
-                                        type="hidden"
-                                        {...register("discount", {
-                                            validate: (value) => {
-                                                if (value === undefined) {
-                                                    return "Discount is required";
-                                                } return value === 0 || (value > 0 && value <= 100) || "Discount must be between 0% and 100%";
-                                            }
-                                        })}
-                                    />
-                                </div>
-                                {errors.discount && (
-                                    <ErrorMessage variant="inline">
-                                        {errors.discount.message}
-                                    </ErrorMessage>
-                                )}
-                            </div>
+                            {errors.name && (
+                                <ErrorMessage variant="inline">
+                                    {errors.name.message}
+                                </ErrorMessage>
+                            )}
                         </div>
 
                         <div className="">
@@ -357,67 +208,214 @@ export default function CreateProductForm() {
                                 htmlFor="name"
                                 className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
                             >
-                                Description {" "}
+                                Stock Available {" "}
+                                <span className="text-red-500">*</span>
                             </label>
                             <div className="relative mb-5">
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                    <Text
+                                    <Boxes
                                         size={16}
                                         className="text-gray-400"
                                     />
                                 </div>
                                 <input 
-                                    type="text" 
-                                    id="description"
-                                    placeholder="Enter Product Description"
+                                    type="number" 
+                                    id="stock"
+                                    placeholder="Enter Product Stock"
                                     className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
                                     bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
                                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                                     shadow-sm transition-all"
-                                    {...register("description", {
-                                        required: false,
+                                    {...register("stock", {
+                                        required: "Stock cannot be empty",
+                                        validate: {
+                                            positive: (value) => value > 0 || "Stock must be greater than 0",
+                                            integer: (value) => Number.isInteger(Number(value)) || "Stock must be an integer",
+                                        }
+                                    })}
+                                    onChange={(e) => {
+                                        const raw = e.target.value.replace(/[^0-9]/g, "");
+                                        const numeric = parseFloat(raw);
+                                        if (!isNaN(numeric)) {
+                                            setValue("stock", numeric);
+                                        }
+                                    }}
+                                />
+                            </div>
+                            {errors.stock && (
+                                <ErrorMessage variant="inline">
+                                    {errors.stock.message}
+                                </ErrorMessage>
+                            )}
+                        </div>
+
+                        <div className="">
+                            <label 
+                                htmlFor="name"
+                                className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
+                            >
+                                Price (USD) {" "}
+                                <span className="text-red-500">*</span>
+                            </label>
+                            <div className="relative mb-5">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <DollarSign
+                                        size={16}
+                                        className="text-gray-400"
+                                    />
+                                </div>
+                                <input 
+                                    type="number" 
+                                    id="price"
+                                    placeholder="Enter Product Price (USD)"
+                                    className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
+                                    bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                                    shadow-sm transition-all"
+                                    {...register("price", {
+                                        required: "Price cannot be empty", 
+                                        validate: (value) => value > 0 || "Price must be greater than 0",
+                                        valueAsNumber: true
+                                    })}
+                                    onChange={(e) => {
+                                        const raw = e.target.value.replace(/[^0-9.]/g, "");
+                                        const numeric = parseFloat(raw);
+                                    
+                                        if (!isNaN(numeric)) {
+                                            setValue("price", numeric);
+                                            setFormattedPrice(formatPriceToUSD(numeric));
+                                    
+                                            // Recalculate discount price if discount exists
+                                            const currentDiscount = getValues("discount") ?? 0;
+                                            updatePriceWithDiscount(numeric, currentDiscount);
+                                        } else {
+                                            setFormattedPrice("");
+                                            setValue("price", 0);
+                                            updatePriceWithDiscount(0, getValues("discount") ?? 0);
+                                        }
+                                    }}              
+                                />
+                            </div>
+                            {errors.price && (
+                                <ErrorMessage variant="inline">
+                                    {errors.price.message}
+                                </ErrorMessage>
+                            )}
+                        </div>
+
+                        <div className="">
+                            <label 
+                                htmlFor="name"
+                                className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
+                            >
+                                Discount (%) {" "}
+                            </label>
+                            <div className="relative mb-5">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <BadgePercent
+                                        size={16}
+                                        className="text-gray-400"
+                                    />
+                                </div>
+                                <input 
+                                    type="text"
+                                    inputMode="numeric"
+                                    id="discount"
+                                    placeholder="Enter Discount Percentage"
+                                    className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
+                                    bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
+                                    focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                                    shadow-sm transition-all"
+                                    value={formattedDiscount}
+                                    onChange={handleDiscountChange}
+                                    onBlur={handleDiscountBlur}
+                                    onFocus={handleDiscountFocus}
+                                />
+
+                                <input
+                                    type="hidden"
+                                    {...register("discount", {
+                                        validate: (value) => {
+                                            if (value === undefined) {
+                                                return "Discount is required";
+                                            } return value === 0 || (value > 0 && value <= 100) || "Discount must be between 0% and 100%";
+                                        }
                                     })}
                                 />
                             </div>
+                            {errors.discount && (
+                                <ErrorMessage variant="inline">
+                                    {errors.discount.message}
+                                </ErrorMessage>
+                            )}
                         </div>
-
-                        <p className="text-sm text-gray-500 dark:text-gray-400">
-                            Price with discount: {" "}
-                            <span className="text-blue-500 text-md font-semibold">
-                                {formattedPriceWithDiscount}
-                            </span>
-                        </p>
                     </div>
 
-                    {/* Form Footer */}
-                    <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
-                        <div className="flex flex-col sm:flex-row sm:justify-between gap-3">
-                            <p className="text-sm text-gray-500 dark:text-gray-400">
-                                <span className="text-red-500">*</span>{" "}
-                                Required fields
-                            </p>
-                            <div className="flex justify-end space-x-3">
-                                {/* Form Footer 
-                                <button
-                                    type="button"
-                                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300
-                                    shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                                >
-                                    Cancel
-                                </button>
-                                */}
-                                <button
-                                    type="submit"
-                                    className="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white
-                                    shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
-                                >
-                                    Register Product
-                                </button>
+                    <div className="">
+                        <label 
+                            htmlFor="name"
+                            className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
+                        >
+                            Description {" "}
+                        </label>
+                        <div className="relative mb-5">
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <Text
+                                    size={16}
+                                    className="text-gray-400"
+                                />
                             </div>
+                            <input 
+                                type="text" 
+                                id="description"
+                                placeholder="Enter Product Description"
+                                className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
+                                bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
+                                focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                                shadow-sm transition-all"
+                                {...register("description", {
+                                    required: false,
+                                })}
+                            />
                         </div>
                     </div>
-                </form>
-            </div>
+
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                        Price with discount: {" "}
+                        <span className="text-blue-500 text-md font-semibold">
+                            {formattedPriceWithDiscount}
+                        </span>
+                    </p>
+                </div>
+
+                {/* Form Footer */}
+                <div className="pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <div className="flex flex-col sm:flex-row sm:justify-between gap-3">
+                        <p className="text-sm text-gray-500 dark:text-gray-400">
+                            <span className="text-red-500">*</span>{" "}
+                            Required fields
+                        </p>
+                        <div className="flex justify-end space-x-3">
+                            {/* Form Footer 
+                            <button
+                                type="button"
+                                className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300
+                                shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            >
+                                Cancel
+                            </button>
+                            */}
+                            <button
+                                type="submit"
+                                className="px-4 py-2 bg-blue-600 border border-transparent rounded-md text-sm font-medium text-white
+                                shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-300"
+                            >
+                                Register Product
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </FormPreset>
     )
 }

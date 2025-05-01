@@ -18,13 +18,17 @@ import {
 	AlertCircle,
 	Info,
 } from "lucide-react";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import Dialog from "@/components/ui/Dialog";
 import Swal, { SweetAlertTheme } from "sweetalert2";
 import { toast } from "react-toastify";
 import { DELETE_PRODUCT, GET_PRODUCTS } from "@/src/graphql/products";
 
 export default function ProductTable() {
+
+    // Router
+    const router = useRouter();
+
 	// State for Search term
 	const [searchTerm, setSearchTerm] = useState("");
 
@@ -58,10 +62,6 @@ export default function ProductTable() {
             }
         },
     });
-
-	if (error) return <p className="text-red-500">Error: {error.message}</p>;
-
-	if (loading) return <Loader />;
 
 	// Filter Products based on search term
 	const filteredProducts =
@@ -118,6 +118,13 @@ export default function ProductTable() {
         } catch {
             toast.error("Error deleting product");
         }
+    }
+
+    if (loading) return <Loader />;
+
+    if(error) {
+        toast.error("Error loading client data")
+        router.push("/home/clients")
     }
 
 	if(data) return (
@@ -267,7 +274,7 @@ export default function ProductTable() {
                                         <div className="flex items-center gap-5">
                                             <button 
                                                 className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
-                                                onClick={() => redirect(`/home/products/${product.id}`)}
+                                                onClick={() => redirect(`/home/products/edit/${product.id}`)}
                                             >
                                                 Edit
                                             </button>

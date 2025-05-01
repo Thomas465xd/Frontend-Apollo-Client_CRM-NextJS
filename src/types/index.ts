@@ -47,6 +47,7 @@ export const productInputSchema = productSchema.pick({
     price: true, 
     discount: true, 
     description: true, 
+    priceWithDiscount: true
 })
 
 // Auth Types

@@ -26,7 +26,9 @@ export default function FormPreset({ children, title, subtitle, icon: Icon }: Fo
                     </p>
                 </div>
 
-                {children}
+                <div className="p-6 lg:p-8">
+                    {children}
+                </div>
             </div>
         </div>
     )
