@@ -84,6 +84,7 @@ export default function RegisterForm() {
 		<form
 			className="space-y-5 bg-white shadow-lg rounded-lg p-6 lg:p-10 border border-gray-200"
 			onSubmit={handleSubmit(handleRegister)}
+            suppressHydrationWarning
 		>
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-5">
 				<div className="space-y-2">

@@ -75,6 +75,7 @@ export default function LoginForm() {
 			className="space-y-5 bg-white rounded-lg p-6 lg:p-10"
 			onSubmit={handleSubmit(handleLogin)}
 			noValidate
+            suppressHydrationWarning
 		>
 			<div className="grid grid-cols-1 gap-5">
 				<div className="space-y-2">

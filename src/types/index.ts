@@ -30,6 +30,17 @@ export const clientSchema = z.object({
     address: z.string().optional(), 
 })
 
+// Product Schemas
+export const productSchema = z.object({
+    id: z.string(), 
+    name: z.string(), 
+    stock: z.number(), 
+    price: z.number(), 
+    discount: z.number().optional(), 
+    priceWithDiscount: z.number().optional(), 
+    description: z.string().optional(), 
+})
+
 // Auth Types
 export type RegisterUserForm = z.infer<typeof registerSchema>
 export type LoginUserForm = z.infer<typeof loginSchema>
@@ -38,3 +49,6 @@ export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>
 // Client Types
 export type RegisterClientForm = z.infer<typeof clientSchema>
 export type ClientInput = z.infer<typeof clientSchema>
+
+// Product Types
+export type Product = z.infer<typeof productSchema>

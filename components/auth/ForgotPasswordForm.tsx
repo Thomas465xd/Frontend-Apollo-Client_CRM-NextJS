@@ -22,6 +22,7 @@ export default function ForgotPasswordForm() {
             className="space-y-5 bg-white shadow-lg rounded-lg p-6 lg:p-10 border border-gray-200"
             onSubmit={handleSubmit(handleForgotPassword)}
             noValidate
+            suppressHydrationWarning
         >
 			<div className="grid grid-cols-1 gap-5">
 				<div className="space-y-2">
