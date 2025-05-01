@@ -36,12 +36,12 @@ export default function RootLayout({
 			<Providers>
 				<div className="md:flex min-h-screen">
 					{/* Sidebar with Fixed Position on Small Screens */}
-					<aside className="md:w-72 xl:w-1/5 bg-gray-800 md:sticky md:top-0 md:h-screen border-b-2 border-gray-700 md:border-b-0 md:border-r-2 md:dark:border-gray-700 md:border-gray-600 md:dark:border-r-2">
+					<aside className="md:w-1/4 xl:w-1/5 bg-gray-800 md:sticky md:top-0 md:h-screen border-b-2 border-gray-700 md:border-b-0 md:border-r-2 md:dark:border-gray-700 md:border-gray-600 md:dark:border-r-2">
 						<Sidebar />
 					</aside>
 
 					{/* Main Content Area containing both content and footer */}
-					<div className="flex-1 flex flex-col">
+					<div className="flex-1 flex flex-col overflow-x-hidden">
 						<div className="flex-1 bg-slate-200 dark:bg-gray-900 p-5 overflow-y-auto">
                             <p className="text-gray-500 text-right"> Welcome: {' '}
                                 <span className="font-semibold">{data.getUser.name}</span>

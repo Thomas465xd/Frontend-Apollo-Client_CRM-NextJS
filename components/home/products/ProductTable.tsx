@@ -1,10 +1,10 @@
 "use client";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import Loader from "@/components/ui/Loader";
 import { Product } from "@/src/types";
 import { copyToClipboard } from "@/src/utils/copy";
 import { formatPriceToUSD } from "@/src/utils/price";
-import { gql, useQuery } from "@apollo/client";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import {
 	Box,
 	Coins,
@@ -16,26 +16,13 @@ import {
 	ChevronUp,
 	Clipboard,
 	AlertCircle,
-	Edit,
-	Trash2,
 	Info,
 } from "lucide-react";
 import { redirect } from "next/navigation";
 import Dialog from "@/components/ui/Dialog";
-
-const GET_PRODUCTS = gql`
-	query getProductsBySeller {
-		getProductsBySeller {
-			id
-			name
-			stock
-			price
-			discount
-			description
-			priceWithDiscount
-		}
-	}
-`;
+import Swal, { SweetAlertTheme } from "sweetalert2";
+import { toast } from "react-toastify";
+import { DELETE_PRODUCT, GET_PRODUCTS } from "@/src/graphql/products";
 
 export default function ProductTable() {
 	// State for Search term
@@ -44,10 +31,36 @@ export default function ProductTable() {
     // State for expanded rows
     const [expandedRows, setExpandedRows] = useState<Record<string, boolean>>({});
 
-	// Get products by seller
+	//? Get products by seller
 	const { loading, error, data } = useQuery(GET_PRODUCTS);
 
+    //! Delete Product
+    // Mutation to delete a client
+    const [deleteProduct] = useMutation(DELETE_PRODUCT, {
+        update(cache, { data }, { variables }) {
+            if (!data || !variables?.id) return;
+    
+            // Read existing data
+            const existing = cache.readQuery<{ getProductsBySeller: Product[] }>({
+                query: GET_PRODUCTS,
+            });
+    
+            if (existing) {
+                // Write new data without the deleted client
+                cache.writeQuery({
+                    query: GET_PRODUCTS,
+                    data: {
+                        getProductsBySeller: existing.getProductsBySeller.filter(
+                            (product) => product.id !== variables.id
+                        ),
+                    },
+                });
+            }
+        },
+    });
+
 	if (error) return <p className="text-red-500">Error: {error.message}</p>;
+
 	if (loading) return <Loader />;
 
 	// Filter Products based on search term
@@ -67,11 +80,47 @@ export default function ProductTable() {
     };
 
 	// Handle delete product
-	const handleDeleteProduct = () => {
+    const handleDeleteProduct = async (id: string) => {
+        try {
+            Swal.fire({
+                title: "Are you sure?", 
+                text: "You won't be able to revert this action!", 
+                icon: "warning",
+                showCancelButton: true, 
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete product!",
+                theme: `${localStorage.getItem("theme") as SweetAlertTheme}`
+            }).then(async (result) => {
+                try {
+                    if(result.isConfirmed) {
+                        const { data } = await deleteProduct({
+                            variables: {
+                                id
+                            }
+                        })
 
-	};
+                        Swal.fire({
+                            title: "Product Deleted 🎉",
+                            text: data.deleteProduct,
+                            icon: "success",
+                            theme: `${localStorage.getItem("theme") as SweetAlertTheme}`  
+                        })
+                    }
+                } catch (error) {
+                    if (error instanceof ApolloError) {
+                        toast.error(error.message);
+                    } else {
+                        toast.error("Unexpected error");
+                    }
+                }
+            })
+        } catch {
+            toast.error("Error deleting product");
+        }
+    }
 
-	return (
+	if(data) return (
 		<div className="overflow-hidden rounded-xl shadow-lg border border-slate-200 dark:border-slate-700">
 			{/* Search bar */}
 			<div className="bg-white dark:bg-slate-800 p-4 border-b border-slate-200 dark:border-slate-700">
@@ -130,15 +179,17 @@ export default function ProductTable() {
 
 					<tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
 						{filteredProducts.map((product : Product) => (
-							<>
+							<Fragment key={product.id}>
 								<tr
 									key={`row-${product.id}`}
-									onClick={() =>
-										toggleRowExpansion(product.id)
-									}
 									className="hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-300 cursor-pointer"
 								>
-									<td className="px-2 py-4 text-center">
+									<td 
+                                        className="px-3 py-4 text-center"
+                                        onClick={() =>
+                                            toggleRowExpansion(product.id)
+                                        }
+                                    >
 										{expandedRows[product.id] ? (
                                             <div className="group relative">
                                                 <ChevronUp
@@ -194,7 +245,7 @@ export default function ProductTable() {
 										)}
 									</td>
 									<td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-										{product.stock > 6 ? (
+										{product.stock > 10 ? (
 											<span className="text-green-600 dark:text-green-400">
 												{product.stock}
 											</span>
@@ -223,7 +274,7 @@ export default function ProductTable() {
 
                                             <button 
                                                 className="text-red-700 hover:text-red-900 transition-colors duration-300"
-                                                onClick={() => {}}
+                                                onClick={() => handleDeleteProduct(product.id)}
                                             >
                                                 Delete
                                             </button>
@@ -343,7 +394,7 @@ export default function ProductTable() {
 										</td>
 									</tr>
 								)}
-							</>
+							</Fragment>
 						))}
 					</tbody>
 				</table>

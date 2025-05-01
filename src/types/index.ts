@@ -41,6 +41,14 @@ export const productSchema = z.object({
     description: z.string().optional(), 
 })
 
+export const productInputSchema = productSchema.pick({
+    name: true, 
+    stock: true, 
+    price: true, 
+    discount: true, 
+    description: true, 
+})
+
 // Auth Types
 export type RegisterUserForm = z.infer<typeof registerSchema>
 export type LoginUserForm = z.infer<typeof loginSchema>
@@ -52,3 +60,4 @@ export type ClientInput = z.infer<typeof clientSchema>
 
 // Product Types
 export type Product = z.infer<typeof productSchema>
+export type ProductForm = z.infer<typeof productInputSchema>
