@@ -9,24 +9,7 @@ import { toast } from "react-toastify";
 import Swal, { SweetAlertTheme } from "sweetalert2";
 import { redirect } from "next/navigation";
 import Dialog from "@/components/ui/Dialog";
-
-const GET_SELLER_CLIENTS = gql`
-	query getSellerClients {
-		getSellerClients {
-			id
-			name
-			surname
-			businessName
-			email
-		}
-	}
-`;
-
-const DELETE_CLIENT = gql`
-    mutation deleteClient($id: ID!) {
-        deleteClient(id: $id)
-    }
-`;
+import { DELETE_CLIENT, GET_SELLER_CLIENTS } from "@/src/graphql/clients";
 
 export default function ClientTable() {
 	// Query to get all clients

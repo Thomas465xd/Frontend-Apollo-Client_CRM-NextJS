@@ -50,6 +50,22 @@ export const productInputSchema = productSchema.pick({
     priceWithDiscount: true
 })
 
+// Order Schemas
+export const orderSchema = z.object({
+    id: z.string(),
+    total: z.number(), 
+    totalWithDiscount: z.number().optional(),
+    client: z.string(),
+    status: z.enum(['PENDING', 'COMPLETED', 'CANCELED']),
+    seller: z.string(),
+    order: z.array(productSchema)
+})
+
+export const selectClient = z.object({
+    id: z.string(), 
+    name: z.string(),
+})
+
 // Auth Types
 export type RegisterUserForm = z.infer<typeof registerSchema>
 export type LoginUserForm = z.infer<typeof loginSchema>
