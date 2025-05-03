@@ -9,7 +9,7 @@ export default function Clients() {
 
             <div className="flex justify-between">
                 <Link href="/home/clients/new" className="bg-blue-500 text-white px-4 py-2 mx-4 mb-5 inline-block rounded-md hover:bg-blue-600 transition-colors duration-300">
-                <span className="block sm:hidden py-3">Add</span>
+                <span className="block sm:hidden sm:py-3 px-3 sm:px-0">Add</span>
                 <span className="hidden sm:block">Add New Client</span>
                 </Link>
 

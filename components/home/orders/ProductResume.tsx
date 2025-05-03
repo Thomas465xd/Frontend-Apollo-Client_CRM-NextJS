@@ -55,36 +55,44 @@ export default function ProductResume({ product } : ProductResumeProps) {
                 )}
             </div>
 
-            <input
-                type="number"
-                placeholder="Quantity"
-                className="py-1 px-2 border-2 border-blue-600 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                value={quantity || ""}
-                min={1}
-                onChange={(e) => {
-                    const value = e.target.value;
-                
-                    // Prevent non-digit characters
-                    if (!/^\d*$/.test(value)) return;
-                
-                    const numeric = parseInt(value, 10);
-                
-                    // If value is empty
-                    if (value === "") {
-                        setQuantity(0);
-                        productsQuantity({ ...product, quantity: 0 });
-                        return;
-                    }
-                
-                    // If numeric value exceeds stock
-                    if (!isNaN(numeric)) {
-                        const clamped = Math.min(numeric, stock);
-                        setQuantity(clamped);
-                        productsQuantity({ ...product, quantity: clamped });
-                    }
-                }}
-                
-            />
+            <div className="md:w-39/100">
+                <label 
+                    htmlFor="quantity"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                    Available Stock: <span className="font-semibold">{stock}</span>
+                </label>
+                <input
+                    type="number"
+                    placeholder="Quantity"
+                    className="py-1 px-2 border-2 border-blue-600 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    value={quantity || ""}
+                    min={1}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                    
+                        // Prevent non-digit characters
+                        if (!/^\d*$/.test(value)) return;
+                    
+                        const numeric = parseInt(value, 10);
+                    
+                        // If value is empty
+                        if (value === "") {
+                            setQuantity(0);
+                            productsQuantity({ ...product, quantity: 0 });
+                            return;
+                        }
+                    
+                        // If numeric value exceeds stock
+                        if (!isNaN(numeric)) {
+                            const clamped = Math.min(numeric, stock);
+                            setQuantity(clamped);
+                            productsQuantity({ ...product, quantity: clamped });
+                        }
+                    }}
+                    
+                />
+            </div>
         </div>
     )
 }

@@ -12,7 +12,7 @@ export type OrderAction =
 // Define the state type
 export type OrderState = {
     client: ClientInput[];
-    products: Product[];
+    products: Product[]; 
     total: number;
 };
 
