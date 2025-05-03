@@ -2,8 +2,9 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import FormPreset from "@/components/ui/FormPreset";
 import Loader from "@/components/ui/Loader";
+import { GET_CLIENT_BY_ID, GET_SELLER_CLIENTS, UPDATE_CLIENT } from "@/src/graphql/clients";
 import { ClientInput, RegisterClientForm } from "@/src/types";
-import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { User, Building2, Mail, Phone, Briefcase, MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo } from "react";
@@ -13,48 +14,6 @@ import { toast } from "react-toastify";
 type EditClientFormProps = {
 	clientId: string;
 };
-
-const UPDATE_CLIENT = gql`
-    mutation updateClient($id: ID!, $input: ClientInput) {
-        updateClient(id: $id, input: $input) {
-            id
-            name
-            surname
-            businessName
-            role
-            email
-            phone
-            address
-        }
-    }
-`;
-
-const GET_SELLER_CLIENTS = gql`
-	query getSellerClients {
-		getSellerClients {
-			id
-			name
-			surname
-			businessName
-			email
-		}
-	}
-`;
-
-const GET_CLIENT_BY_ID = gql`
-	query getClientById($id: ID!) {
-		getClientById(id: $id) {
-            id
-			name
-			surname
-            email
-			role
-			businessName
-			phone
-            address
-		}
-	}
-`;
 
 export default function EditClientForm({ clientId }: EditClientFormProps) {
 	const router = useRouter();

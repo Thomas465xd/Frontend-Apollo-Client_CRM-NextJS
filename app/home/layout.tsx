@@ -36,7 +36,7 @@ export default function RootLayout({
 			<Providers>
 				<div className="md:flex min-h-screen">
 					{/* Sidebar with Fixed Position on Small Screens */}
-					<aside className="md:w-1/4 xl:w-1/5 bg-gray-800 md:sticky md:top-0 md:h-screen border-b-2 border-gray-700 md:border-b-0 md:border-r-2 md:dark:border-gray-700 md:border-gray-600 md:dark:border-r-2">
+					<aside className="md:w-1/5 bg-gray-800 md:sticky md:top-0 md:h-screen border-b-2 border-gray-700 md:border-b-0 md:border-r-2 md:dark:border-gray-700 md:border-gray-600 md:dark:border-r-2">
 						<Sidebar />
 					</aside>
 

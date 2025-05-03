@@ -1,6 +1,6 @@
 "use client";
 import Loader from "@/components/ui/Loader";
-import { ApolloError, gql, useMutation, useQuery } from "@apollo/client";
+import { ApolloError, useMutation, useQuery } from "@apollo/client";
 import { useState } from "react";
 import { Search, UserCircle, Building, Mail, Edit } from "lucide-react";
 import { copyToClipboard } from "@/src/utils/copy";

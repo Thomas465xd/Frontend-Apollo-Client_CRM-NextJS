@@ -9,16 +9,45 @@ const OrderReducer = (state: OrderState, action: OrderAction): OrderState => {
                     client: [action.payload]
                 };
             }
-            return state;
+
+        return state;
             
-            case "ADD_PRODUCT":
+        case "ADD_PRODUCT":
+            if (action.payload && typeof action.payload === "object") {
+                const merged = action.payload.map(product => {
+                    const existing = state.products.find(p => p.id === product.id);
+                    if (existing) {
+                        return { ...existing, ...product };
+                    } else {
+                        return { ...product, quantity: 0 }; // 👈 set default quantity
+                    }
+                });
+        
+                return {
+                    ...state,
+                    products: merged,
+                };
+            }
+            return state;     
+            
+            case "UPDATE_QUANTITY":
                 if(action.payload && typeof action.payload === 'object') {
                     return {
                         ...state,
-                        products: action.payload, // ← TS knows it's Product[] now
+                        products: state.products.map(product => 
+                            product.id === action.payload.id ? action.payload : product
+                        )
                     };
                 }
-            
+
+        return state;
+
+        case "UPDATE_TOTAL":
+            return {
+                ...state, 
+                total: state.products.reduce((accumulator, product) => accumulator + (product.priceWithDiscount ?? product.price) * (product.quantity ?? 0), 0)
+            }
+
         default:
             return state;
     }

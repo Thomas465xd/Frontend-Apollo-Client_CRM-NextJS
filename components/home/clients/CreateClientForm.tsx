@@ -1,39 +1,13 @@
 "use client";
 import ErrorMessage from "@/components/ui/ErrorMessage";
 import FormPreset from "@/components/ui/FormPreset";
+import { CREATE_CLIENT, GET_SELLER_CLIENTS } from "@/src/graphql/clients";
 import { ClientInput, RegisterClientForm } from "@/src/types";
-import { ApolloError, gql, useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { User, Building2, Mail, Phone, Briefcase, MapPin } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-
-const CREATE_CLIENT = gql`
-    mutation createClient($input: ClientInput) {
-        createClient(input: $input) {
-            id
-            name
-            surname
-            businessName
-            role
-            email
-            phone
-            address
-        }
-    }
-`
-
-const GET_SELLER_CLIENTS = gql`
-	query getSellerClients {
-		getSellerClients {
-			id
-			name
-			surname
-			businessName
-			email
-		}
-	}
-`;
 
 export default function CreateClientForm() {
 

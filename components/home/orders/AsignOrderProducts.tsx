@@ -49,9 +49,7 @@ export default function AsignOrderProducts() {
     }, []);
 
     useEffect(() => {
-        if (products.length > 0) {
-            asignProducts(products);
-        }
+        asignProducts(products);
     }, [products, asignProducts]);
 
     // Handler for client selection
