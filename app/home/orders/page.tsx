@@ -1,3 +1,4 @@
+import OrdersTable from "@/components/home/orders/OrdersTable";
 import Title from "@/components/ui/Title";
 import Link from "next/link";
 
@@ -17,7 +18,7 @@ export default function Orders() {
                 </p>
             </div>
 
-
+            <OrdersTable />
         </div>
 	);
 }

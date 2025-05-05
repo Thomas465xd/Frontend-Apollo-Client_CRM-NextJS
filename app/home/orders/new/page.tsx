@@ -1,4 +1,4 @@
-import CreateOrderForm from "@/components/home/orders/CreateOrderForm";
+import CreateOrderForm from "@/components/home/orders/new/CreateOrderForm";
 import Title from "@/components/ui/Title";
 import Link from "next/link";
 

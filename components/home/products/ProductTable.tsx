@@ -123,8 +123,8 @@ export default function ProductTable() {
     if (loading) return <Loader />;
 
     if(error) {
-        toast.error("Error loading client data")
-        router.push("/home/clients")
+        toast.error("Error loading products data")
+        router.push("/home/products")
     }
 
 	if(data) return (

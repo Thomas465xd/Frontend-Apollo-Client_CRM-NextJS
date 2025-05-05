@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 
 export default function ProductsEdit() {
-	return (
+    return (
         redirect("/home/orders") // Redirect to the clients page
-	);
+    );
 }

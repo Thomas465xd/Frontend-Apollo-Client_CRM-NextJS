@@ -56,10 +56,21 @@ export const orderSchema = z.object({
     id: z.string(),
     total: z.number(), 
     totalWithDiscount: z.number().optional(),
-    client: z.string(),
-    status: z.enum(['PENDING', 'COMPLETED', 'CANCELED']),
+    client: z.object({
+        id: z.string(),
+        name: z.string(),
+        surname: z.string(),
+        businessName: z.string(),
+        role: z.string().optional(),
+        email: z.string().optional(),
+        phone: z.string().optional(),
+        address: z.string().optional(),
+    }),
+    status: z.enum(['PENDING', 'COMPLETED', 'CANCELLED']),
     seller: z.string(),
-    order: z.array(productSchema)
+    order: z.array(productSchema),
+    createdAt: z.string(),
+    updatedAt: z.string(),
 })
 
 export const selectClient = z.object({
@@ -79,3 +90,6 @@ export type ClientInput = z.infer<typeof clientSchema>
 // Product Types
 export type Product = z.infer<typeof productSchema>
 export type ProductForm = z.infer<typeof productInputSchema>
+
+// Order Types
+export type Order = z.infer<typeof orderSchema>

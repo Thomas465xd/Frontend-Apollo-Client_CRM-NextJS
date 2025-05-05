@@ -1,15 +1,16 @@
 "use client"
 import React, { useContext } from 'react'
-import AsignOrderClient from './AsignOrderClient'
 import OrderContext from '@/src/context/orders/OrderContext'
-import AsignOrderProducts from './AsignOrderProducts';
-import OrderResume from './OrderResume';
-import OrderTotal from './OrderTotal';
 import { ApolloError, useMutation } from '@apollo/client';
-import { CREATE_ORDER } from '@/src/graphql/orders';
+import { CREATE_ORDER, GET_ORDERS } from '@/src/graphql/orders';
 import { toast } from 'react-toastify';
 import Swal, { SweetAlertTheme } from 'sweetalert2';
 import { useRouter } from 'next/navigation';
+import AsignOrderClient from './AsignOrderClient';
+import AsignOrderProducts from './AsignOrderProducts';
+import OrderResume from './OrderResume';
+import OrderTotal from './OrderTotal';
+import { Order } from '@/src/types';
 
 export default function CreateOrderForm() {
 
@@ -21,7 +22,11 @@ export default function CreateOrderForm() {
     const { client, products, total } = orderContext
 
     //! Create Order Mutation
-    const [createOrder, { loading }] = useMutation(CREATE_ORDER);
+    const [createOrder, { loading }] = useMutation(CREATE_ORDER, {
+        refetchQueries: [{ query: GET_ORDERS }]
+    });
+
+    //! END
     
     const validateOrder = () => {
         return (
@@ -37,16 +42,23 @@ export default function CreateOrderForm() {
         // Get the client id
         const { id } = client[0]; 
 
+        // Get the total with discount
+        const totalWithDiscount = products.reduce((total, product) => total + (product.priceWithDiscount ?? 0) * (product.quantity ?? 0), 0);
+
         // Remove not necessary values from the order input
         const order = products.map( product => ({
             product: product.id, 
-            quantity: product.quantity
+            quantity: product.quantity, 
+            name: product.name,
+            price: product.price,
+            discount: product.discount,
+            priceWithDiscount: product.priceWithDiscount
         }))
 
         try {
             Swal.fire({
                 title: "Are you sure?", 
-                text: "You can also edit the order on the orders page", 
+                text: "You won't be able to edit this order later!", 
                 icon: "info",
                 showCancelButton: true, 
                 confirmButtonColor: "#3085d6",
@@ -61,6 +73,7 @@ export default function CreateOrderForm() {
                             variables: {
                                 input: {
                                     total, 
+                                    totalWithDiscount,
                                     client: id,
                                     status: "PENDING",
                                     order
