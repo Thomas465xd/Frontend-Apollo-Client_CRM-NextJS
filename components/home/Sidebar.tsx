@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import DarkMode from "../ui/DarkMode"
 import SidebarRoute from "./SidebarRoute"
+import Swal, { SweetAlertTheme } from "sweetalert2";
 
 const sidebarNavigation = [
     {url: '/home', text: 'Home', blank: false},
@@ -14,9 +15,22 @@ const sidebarNavigation = [
 
 export default function Sidebar() {
 
-    const logout = () => {
-        localStorage.removeItem('AUTH_TOKEN');
-        redirect('/auth/login');
+    const handleLogout = () => {
+        Swal.fire({
+            title: "Are you sure?", 
+            text: "You won't be able to revert this action!", 
+            icon: "warning",
+            showCancelButton: true, 
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, logout!",
+            theme: `${localStorage.getItem("theme") as SweetAlertTheme}`
+        }).then(async (result) => {
+            if(result.isConfirmed) {
+                localStorage.removeItem('AUTH_TOKEN');
+                redirect('/auth/login');
+            }
+        })
     };
 
     return (
@@ -49,7 +63,7 @@ export default function Sidebar() {
                         <button
                             className="mt-5 bg-slate-800 hover:bg-slate-900 w-full p-3 text-red-300 font-black text-md cursor-pointer transition-colors duration-300"
                             type="button"
-                            onClick={logout}
+                            onClick={handleLogout}
                         >
                             Logout
                         </button>

@@ -1,16 +1,9 @@
 "use client";
 import FormPreset from "@/components/ui/FormPreset";
 import Loader from "@/components/ui/Loader";
-import { gql, useQuery } from "@apollo/client";
+import { GET_PROFILE } from "@/src/graphql/user";
+import { useQuery } from "@apollo/client";
 import { User, Mail } from "lucide-react";
-
-const GET_PROFILE = gql`
-	query getUser {
-		getUser {
-			name
-		}
-	}
-`;
 
 export default function ProfileForm() {
 	const { data, loading, error } = useQuery(GET_PROFILE);
@@ -24,7 +17,7 @@ export default function ProfileForm() {
 			</div>
 		);
 
-	return (
+	if(data) return (
         <FormPreset title="Edit Profile" subtitle="Update your profile information" icon={User}>
             <div className="p-6">
                 <form className="space-y-6">

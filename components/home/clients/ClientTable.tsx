@@ -224,11 +224,10 @@ export default function ClientTable() {
 						) : (
 							<tr>
 								<td
-									colSpan={4}
+									colSpan={5}
 									className="px-6 py-8 text-center text-slate-500 dark:text-slate-400"
 								>
-									No clients found matching your search
-									criteria.
+									No clients found
 								</td>
 							</tr>
 						)}

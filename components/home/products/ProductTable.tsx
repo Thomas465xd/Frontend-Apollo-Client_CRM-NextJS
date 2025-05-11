@@ -185,224 +185,235 @@ export default function ProductTable() {
 					</thead>
 
 					<tbody className="divide-y divide-slate-200 dark:divide-slate-700 bg-white dark:bg-slate-800">
-						{filteredProducts.map((product : Product) => (
-							<Fragment key={product.id}>
-								<tr
-									key={`row-${product.id}`}
-									className="hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-300 cursor-pointer"
-								>
-									<td 
-                                        className="px-3 py-4 text-center"
-                                        onClick={() =>
-                                            toggleRowExpansion(product.id)
-                                        }
+                        {filteredProducts.length > 0 ? (
+                            filteredProducts.map((product : Product) => (
+                                <Fragment key={product.id}>
+                                    <tr
+                                        key={`row-${product.id}`}
+                                        className="hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors duration-300 cursor-pointer"
                                     >
-										{expandedRows[product.id] ? (
-                                            <div className="group relative">
-                                                <ChevronUp
-                                                    size={16}
-                                                    className="text-slate-500"
-                                                />
-                                                <Dialog position="right-top">Less Info</Dialog>
+                                        <td 
+                                            className="px-3 py-4 text-center"
+                                            onClick={() =>
+                                                toggleRowExpansion(product.id)
+                                            }
+                                        >
+                                            {expandedRows[product.id] ? (
+                                                <div className="group relative">
+                                                    <ChevronUp
+                                                        size={16}
+                                                        className="text-slate-500"
+                                                    />
+                                                    <Dialog position="right-top">Less Info</Dialog>
+                                                </div>
+                                            ) : (
+                                                <div className="group relative">
+                                                    <ChevronDown
+                                                        size={16}
+                                                        className="text-slate-500"
+                                                    />
+                                                    <Dialog position="right-top">More Info</Dialog>
+                                                </div>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
+                                            <div className="flex items-center">
+                                                <span className="mr-2">
+                                                    {product.name}
+                                                </span>
+                                                <button
+                                                    onClick={() => copyToClipboard(product.name)}
+                                                    className="text-slate-400 hover:text-blue-500 transition-colors duration-200 group relative"
+                                                    title="Copy product name"
+                                                >
+                                                    <Dialog position="right-top">Copy</Dialog>
+                                                    <Clipboard size={14} />
+                                                </button>
                                             </div>
-										) : (
-                                            <div className="group relative">
-                                                <ChevronDown
-                                                    size={16}
-                                                    className="text-slate-500"
-                                                />
-                                                <Dialog position="right-top">More Info</Dialog>
+                                        </td>
+                                        <td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
+                                            {formatPriceToUSD(product.price)}
+                                            {product.discount !== 0 && (
+                                                <span className="ml-2 text-xs text-green-500 font-medium">
+                                                    {formatPriceToUSD(
+                                                        product.priceWithDiscount || 0
+                                                    )}
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
+                                            {product.discount ? (
+                                                <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-green-200 text-green-800">
+                                                    {product.discount}%
+                                                </span>
+                                            ) : (
+                                                <span className="text-slate-400">
+                                                    N/A
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
+                                            {product.stock > 10 ? (
+                                                <span className="text-green-600 dark:text-green-400">
+                                                    {product.stock}
+                                                </span>
+                                            ) : product.stock > 0 ? (
+                                                <span className="text-orange-500 flex items-center">
+                                                    <AlertCircle
+                                                        size={14}
+                                                        className="mr-1"
+                                                    />
+                                                    {product.stock}
+                                                </span>
+                                            ) : (
+                                                <span className="text-red-500">
+                                                    Out of stock
+                                                </span>
+                                            )}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
+                                            <div className="flex items-center gap-5">
+                                                <button 
+                                                    className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
+                                                    onClick={() => redirect(`/home/products/edit/${product.id}`)}
+                                                >
+                                                    Edit
+                                                </button>
+    
+                                                <button 
+                                                    className="text-red-700 hover:text-red-900 transition-colors duration-300"
+                                                    onClick={() => handleDeleteProduct(product.id)}
+                                                >
+                                                    Delete
+                                                </button>
                                             </div>
-										)}
-									</td>
-									<td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
-										<div className="flex items-center">
-											<span className="mr-2">
-												{product.name}
-											</span>
-											<button
-												onClick={() => copyToClipboard(product.name)}
-												className="text-slate-400 hover:text-blue-500 transition-colors duration-200 group relative"
-												title="Copy product name"
-											>
-                                                <Dialog position="right-top">Copy</Dialog>
-												<Clipboard size={14} />
-											</button>
-										</div>
-									</td>
-									<td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
-										{formatPriceToUSD(product.price)}
-										{product.discount !== 0 && (
-											<span className="ml-2 text-xs text-green-500 font-medium">
-												{formatPriceToUSD(
-													product.priceWithDiscount || 0
-												)}
-											</span>
-										)}
-									</td>
-									<td className="px-6 py-4 text-sm font-medium text-slate-800 dark:text-slate-200 whitespace-nowrap">
-										{product.discount ? (
-											<span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-green-200 text-green-800">
-												{product.discount}%
-											</span>
-										) : (
-											<span className="text-slate-400">
-												N/A
-											</span>
-										)}
-									</td>
-									<td className="px-6 py-4 text-sm font-medium whitespace-nowrap">
-										{product.stock > 10 ? (
-											<span className="text-green-600 dark:text-green-400">
-												{product.stock}
-											</span>
-										) : product.stock > 0 ? (
-											<span className="text-orange-500 flex items-center">
-												<AlertCircle
-													size={14}
-													className="mr-1"
-												/>
-												{product.stock}
-											</span>
-										) : (
-											<span className="text-red-500">
-												Out of stock
-											</span>
-										)}
-									</td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-700">
-                                        <div className="flex items-center gap-5">
-                                            <button 
-                                                className="text-blue-500 hover:text-blue-700 transition-colors duration-300"
-                                                onClick={() => redirect(`/home/products/edit/${product.id}`)}
-                                            >
-                                                Edit
-                                            </button>
-
-                                            <button 
-                                                className="text-red-700 hover:text-red-900 transition-colors duration-300"
-                                                onClick={() => handleDeleteProduct(product.id)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </td>
-								</tr>
-								{/* Expanded Details Row */}
-								{expandedRows[product.id] && (
-									<tr
-										key={`details-${product.id}`}
-										className="bg-slate-50 dark:bg-slate-700/50"
-									>
-										<td colSpan={6} className="px-6 py-4">
-											<div className="flex items-start gap-2 text-sm">
-												<Info
-													size={18}
-													className="text-slate-400 mt-0.5"
-												/>
-												<div className="space-y-2 w-full">
-													<div className="flex flex-col">
-														<span className="text-xs text-slate-500 dark:text-slate-400">
-															Product ID:
-														</span>
-														<div className="flex items-center">
-															<span className="font-mono text-slate-800 dark:text-slate-200 mr-2">
-																{product.id}
-															</span>
-															<button
-                                                                title="Copy product ID"
-																onClick={() =>
-																	copyToClipboard(
-																		product.id
-																	)
-																}
-																className="text-slate-400 hover:text-blue-500 transition-colors duration-200"
-															>
-																<Clipboard
-																	size={14}
-																/>
-															</button>
-														</div>
-													</div>
-
-													<div>
-														<span className="text-xs text-slate-500 dark:text-slate-400">
-															Description:
-														</span>
-														<p className="text-slate-800 dark:text-slate-200 whitespace-normal">
-															{product.description ||
-																"No description available"}
-														</p>
-													</div>
-
-													<div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-2">
-														<div>
-															<span className="text-xs text-slate-500 dark:text-slate-400">
-																Original Price:
-															</span>
-															<p className="font-medium text-slate-800 dark:text-slate-200">
-																{formatPriceToUSD(
-																	product.price
-																)}
-															</p>
-														</div>
-
-														{product.discount !== 0 ? (
-															<div>
-																<span className="text-xs text-slate-500 dark:text-slate-400">
-																	Price with
-																	Discount:
-																</span>
-																<p className="font-medium text-green-600 dark:text-green-400">
-																	{formatPriceToUSD(
-																		product.priceWithDiscount || 0
-																	)}
-																</p>
-															</div>
-														) : (
+                                        </td>
+                                    </tr>
+                                    {/* Expanded Details Row */}
+                                    {expandedRows[product.id] && (
+                                        <tr
+                                            key={`details-${product.id}`}
+                                            className="bg-slate-50 dark:bg-slate-700/50"
+                                        >
+                                            <td colSpan={6} className="px-6 py-4">
+                                                <div className="flex items-start gap-2 text-sm">
+                                                    <Info
+                                                        size={18}
+                                                        className="text-slate-400 mt-0.5"
+                                                    />
+                                                    <div className="space-y-2 w-full">
+                                                        <div className="flex flex-col">
+                                                            <span className="text-xs text-slate-500 dark:text-slate-400">
+                                                                Product ID:
+                                                            </span>
+                                                            <div className="flex items-center">
+                                                                <span className="font-mono text-slate-800 dark:text-slate-200 mr-2">
+                                                                    {product.id}
+                                                                </span>
+                                                                <button
+                                                                    title="Copy product ID"
+                                                                    onClick={() =>
+                                                                        copyToClipboard(
+                                                                            product.id
+                                                                        )
+                                                                    }
+                                                                    className="text-slate-400 hover:text-blue-500 transition-colors duration-200"
+                                                                >
+                                                                    <Clipboard
+                                                                        size={14}
+                                                                    />
+                                                                </button>
+                                                            </div>
+                                                        </div>
+    
+                                                        <div>
+                                                            <span className="text-xs text-slate-500 dark:text-slate-400">
+                                                                Description:
+                                                            </span>
+                                                            <p className="text-slate-800 dark:text-slate-200 whitespace-normal">
+                                                                {product.description ||
+                                                                    "No description available"}
+                                                            </p>
+                                                        </div>
+    
+                                                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-2">
                                                             <div>
                                                                 <span className="text-xs text-slate-500 dark:text-slate-400">
-                                                                    Price with
-                                                                    Discount:
+                                                                    Original Price:
                                                                 </span>
-                                                                <p className="font-medium text-slate-400 dark:text-slate-500">
-                                                                    N/A
+                                                                <p className="font-medium text-slate-800 dark:text-slate-200">
+                                                                    {formatPriceToUSD(
+                                                                        product.price
+                                                                    )}
                                                                 </p>
                                                             </div>
-                                                        )}
-
-														<div>
-															<span className="text-xs text-slate-500 dark:text-slate-400">
-																Stock Status:
-															</span>
-															<p
-																className={`font-medium ${
-																	product.stock >
-																	10
-																		? "text-green-600 dark:text-green-400"
-																		: product.stock >
-																		    0
-																		? "text-orange-500"
-																		: "text-red-500"
-																}`}
-															>
-																{product.stock >
-																10
-																	? "In Stock"
-																	: product.stock >
-																	    0
-																	? "Low Stock"
-																	: "Out of Stock"}
-															</p>
-														</div>
-													</div>
-												</div>
-											</div>
-										</td>
-									</tr>
-								)}
-							</Fragment>
-						))}
+    
+                                                            {product.discount !== 0 ? (
+                                                                <div>
+                                                                    <span className="text-xs text-slate-500 dark:text-slate-400">
+                                                                        Price with
+                                                                        Discount:
+                                                                    </span>
+                                                                    <p className="font-medium text-green-600 dark:text-green-400">
+                                                                        {formatPriceToUSD(
+                                                                            product.priceWithDiscount || 0
+                                                                        )}
+                                                                    </p>
+                                                                </div>
+                                                            ) : (
+                                                                <div>
+                                                                    <span className="text-xs text-slate-500 dark:text-slate-400">
+                                                                        Price with
+                                                                        Discount:
+                                                                    </span>
+                                                                    <p className="font-medium text-slate-400 dark:text-slate-500">
+                                                                        N/A
+                                                                    </p>
+                                                                </div>
+                                                            )}
+    
+                                                            <div>
+                                                                <span className="text-xs text-slate-500 dark:text-slate-400">
+                                                                    Stock Status:
+                                                                </span>
+                                                                <p
+                                                                    className={`font-medium ${
+                                                                        product.stock >
+                                                                        10
+                                                                            ? "text-green-600 dark:text-green-400"
+                                                                            : product.stock >
+                                                                                0
+                                                                            ? "text-orange-500"
+                                                                            : "text-red-500"
+                                                                    }`}
+                                                                >
+                                                                    {product.stock >
+                                                                    10
+                                                                        ? "In Stock"
+                                                                        : product.stock >
+                                                                            0
+                                                                        ? "Low Stock"
+                                                                        : "Out of Stock"}
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    )}
+                                </Fragment>
+                            ))
+                        ) : (
+							<tr>
+								<td
+									colSpan={6}
+									className="px-6 py-8 text-center text-slate-500 dark:text-slate-400"
+								>
+									No products found
+								</td>
+							</tr>
+						)}
 					</tbody>
 				</table>
 			</div>

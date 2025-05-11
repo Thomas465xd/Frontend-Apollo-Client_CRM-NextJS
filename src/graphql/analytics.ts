@@ -18,6 +18,7 @@ export const GET_BEST_SELLERS = gql`
         getBestSellers {
             seller {
                 name
+                surname
                 email
             }
             totalOrders

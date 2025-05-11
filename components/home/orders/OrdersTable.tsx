@@ -38,7 +38,7 @@ export default function OrdersTable() {
                     ))}
                 </div>
             ) : (
-                <div className="">
+                <div className="my-20">
                     <p className="text-gray-700 text-center p-5">No orders found</p>
                 </div>
             )}

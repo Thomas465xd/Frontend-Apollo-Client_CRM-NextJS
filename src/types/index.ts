@@ -82,6 +82,7 @@ export const selectClient = z.object({
 export const bestSellerSchema = z.object({
     seller: z.object({
         name: z.string(),
+        surname: z.string(),
         email: z.string(),
     }),
     totalOrders: z.number(),
