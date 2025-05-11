@@ -78,6 +78,25 @@ export const selectClient = z.object({
     name: z.string(),
 })
 
+// Analytics Schemas
+export const bestSellerSchema = z.object({
+    seller: z.object({
+        name: z.string(),
+        email: z.string(),
+    }),
+    totalOrders: z.number(),
+    totalSales: z.number(),
+})
+
+export const bestClientSchema = z.object({
+    client: z.object({
+        name: z.string(), 
+        email: z.string(),
+    }),
+    totalOrders: z.number(),
+    totalSpent: z.number(),
+})
+
 // Auth Types
 export type RegisterUserForm = z.infer<typeof registerSchema>
 export type LoginUserForm = z.infer<typeof loginSchema>
@@ -93,3 +112,7 @@ export type ProductForm = z.infer<typeof productInputSchema>
 
 // Order Types
 export type Order = z.infer<typeof orderSchema>
+
+// Analytics Types
+export type BestSeller = z.infer<typeof bestSellerSchema>
+export type BestClient = z.infer<typeof bestClientSchema>

@@ -9,6 +9,7 @@ const sidebarNavigation = [
     {url: '/home/clients', text: 'Clients', blank: false},
     {url: '/home/products', text: 'Products', blank: false},
     {url: '/home/orders', text: 'Orders', blank: false},
+    {url: '/home/analytics', text: 'Analytics', blank: false},
 ]
 
 export default function Sidebar() {
