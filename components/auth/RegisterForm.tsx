@@ -2,21 +2,11 @@
 import { RegisterUserForm } from "@/src/types";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ui/ErrorMessage";
-import { useMutation, gql, ApolloError } from "@apollo/client";
+import { useMutation, ApolloError } from "@apollo/client";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { redirect } from "next/navigation";
-
-const CREATE_USER = gql`
-	mutation createUser($input: UserInput) {
-		createUser(input: $input) {
-			id
-			name
-			surname
-			email
-		}
-	}
-`;
+import { CREATE_USER } from "@/src/graphql/user";
 
 export default function RegisterForm() {
 	// Mutation to create a new user

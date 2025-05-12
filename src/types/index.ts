@@ -18,6 +18,13 @@ export const forgotPasswordSchema = z.object({
     email: z.string().email() 
 })
 
+export const userSchema = z.object({
+    id: z.string().optional(), 
+    name: z.string(), 
+    surname: z.string(), 
+    email: z.string().email(),
+})
+
 // Client Schemas
 export const clientSchema = z.object({
     id: z.string().optional(),
@@ -28,6 +35,17 @@ export const clientSchema = z.object({
     email: z.string().email(),
     phone: z.string().optional(),
     address: z.string().optional(), 
+})
+
+export const clientTableSchema = z.object({
+    id: z.string(),
+    name: z.string(),
+    surname: z.string(),
+    businessName: z.string(),
+    role: z.string().optional(), 
+    email: z.string().email(),
+    phone: z.string().default("Not Provided"),
+    address: z.string().default("Not Provided"), 
 })
 
 // Product Schemas
@@ -102,10 +120,12 @@ export const bestClientSchema = z.object({
 export type RegisterUserForm = z.infer<typeof registerSchema>
 export type LoginUserForm = z.infer<typeof loginSchema>
 export type ForgotPasswordForm = z.infer<typeof forgotPasswordSchema>
+export type UpdateUser = z.infer<typeof userSchema>
 
 // Client Types
 export type RegisterClientForm = z.infer<typeof clientSchema>
 export type ClientInput = z.infer<typeof clientSchema>
+export type ClientTableResume = z.infer<typeof clientTableSchema>
 
 // Product Types
 export type Product = z.infer<typeof productSchema>

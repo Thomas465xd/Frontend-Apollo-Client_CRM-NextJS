@@ -8,6 +8,9 @@ export const GET_SELLER_CLIENTS = gql`
 			surname
 			businessName
 			email
+            role
+            address
+            phone
 		}
 	}
 `;

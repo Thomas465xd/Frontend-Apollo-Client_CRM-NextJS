@@ -1,26 +1,67 @@
 "use client";
+import ErrorMessage from "@/components/ui/ErrorMessage";
 import FormPreset from "@/components/ui/FormPreset";
 import Loader from "@/components/ui/Loader";
 import { GET_PROFILE } from "@/src/graphql/user";
+import { UpdateUser } from "@/src/types";
 import { useQuery } from "@apollo/client";
 import { User, Mail } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useEffect, useMemo } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 export default function ProfileForm() {
-	const { data, loading, error } = useQuery(GET_PROFILE);
+    const router = useRouter();
 
-	if (loading) return <Loader />;
+    const { data, loading, error } = useQuery<{getUser: UpdateUser}>(GET_PROFILE);
 
-	if (error)
-		return (
-			<div className="bg-red-50 text-red-500 p-4 rounded-lg shadow">
-				Error loading profile: {error.message}
-			</div>
-		);
+    const userData = useMemo(() => data?.getUser, [data]);
 
-	if(data) return (
+    // Initialize with empty default values
+    const initialValues: UpdateUser = {
+        name: "",
+        surname: "",
+        email: "",
+    };
+
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors },
+    } = useForm<UpdateUser>({
+        defaultValues: initialValues,
+    });
+
+    // Refetch form data
+    useEffect(() => {
+        if (userData) {
+            reset({
+                name: userData.name || "",
+                surname: userData.surname || "",
+                email: userData.email || "",
+            });
+        }
+    }, [userData, reset]); // Fixed: removed clientData and replaced with userData
+
+    const handleUpdate = async (formData: UpdateUser) => {
+        const { name, surname, email } = formData;
+        // Implementation of update logic
+    }
+
+    if (loading) return <Loader />;
+
+    if(error) {
+        toast.error("Error loading profile data");
+        router.push("/home");
+        return null; // Added explicit return for this case
+    }
+
+    return (
         <FormPreset title="Edit Profile" subtitle="Update your profile information" icon={User}>
             <div className="p-6">
-                <form className="space-y-6">
+                <form className="space-y-6" onSubmit={handleSubmit(handleUpdate)}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label
@@ -39,13 +80,20 @@ export default function ProfileForm() {
                                 <input
                                     type="text"
                                     id="name"
-                                    name="name"
                                     placeholder="Enter your name"
                                     className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
                                             bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
                                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                                             shadow-sm transition-colors"
+                                    {...register("name", {
+                                        required: "Name cannot be empty",
+                                    })}
                                 />
+                                {errors.name && (
+                                    <ErrorMessage variant="inline">
+                                        {errors.name.message}
+                                    </ErrorMessage>
+                                )}
                             </div>
                         </div>
 
@@ -66,14 +114,41 @@ export default function ProfileForm() {
                                 <input
                                     type="text"
                                     id="surname"
-                                    name="surname"
                                     placeholder="Enter your surname"
                                     className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
                                             bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
                                             focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                                             shadow-sm transition-colors"
+                                    {...register("surname")}
                                 />
                             </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label
+                            htmlFor="email"
+                            className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
+                        >
+                            Email
+                        </label>
+                        <div className="relative">
+                            <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                <Mail
+                                    size={16}
+                                    className="text-gray-400"
+                                />
+                            </div>
+                            <input
+                                type="email"
+                                id="email"
+                                placeholder="Enter your email"
+                                className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
+                                        bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
+                                        focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                                        shadow-sm transition-colors"
+                                {...register("email")}
+                            />
                         </div>
                     </div>
 
@@ -84,6 +159,7 @@ export default function ProfileForm() {
                                 type="button"
                                 className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700
                                         shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                onClick={() => router.back()}
                             >
                                 Cancel
                             </button>
@@ -99,6 +175,5 @@ export default function ProfileForm() {
                 </form>
             </div>
         </FormPreset>
-
-	);
+    );
 }

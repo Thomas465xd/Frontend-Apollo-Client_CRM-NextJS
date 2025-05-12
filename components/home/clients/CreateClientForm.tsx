@@ -245,12 +245,14 @@ export default function CreateClientForm() {
                                 <input
                                     type="text"
                                     id="role"
-                                    name="role"
                                     placeholder="Enter client's role"
                                     className="w-full pl-10 pr-3 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 
                                     bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200 
                                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                                     shadow-sm transition-all"
+                                    {...register("role", {
+                                        required: false, 
+                                    })}
                                 />
                             </div>
                             {errors.role && <ErrorMessage variant="inline">{errors.role.message}</ErrorMessage>}
@@ -364,6 +366,9 @@ export default function CreateClientForm() {
                                     bg-white dark:bg-slate-700 text-gray-700 dark:text-gray-200
                                     focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent
                                     shadow-sm transition-all"
+                                    {...register("address", {
+                                        required: false, 
+                                    })}
                                 />
                             </div>
                             {errors.address && <ErrorMessage variant="inline">{errors.address.message}</ErrorMessage>}

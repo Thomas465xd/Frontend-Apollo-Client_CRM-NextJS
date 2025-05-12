@@ -2,17 +2,10 @@
 import { LoginUserForm } from "@/src/types";
 import { useForm } from "react-hook-form";
 import ErrorMessage from "../ui/ErrorMessage";
-import { ApolloError, gql, useMutation } from "@apollo/client";
+import { ApolloError, useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-
-const LOGIN_USER = gql`
-    mutation AuthUser($input: AuthInput) {
-        authenticateUser(input: $input) {
-            token
-        }
-    }
-`
+import { LOGIN_USER } from "@/src/graphql/user";
 
 export default function LoginForm() {
 

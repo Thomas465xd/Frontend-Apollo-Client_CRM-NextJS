@@ -36,7 +36,7 @@ export default function Sidebar() {
     return (
         <>
             <div className="text-2xl pt-5 pb-2 px-10 border-b-2 border-blue-500 dark:border-gray-600">
-                <h1 className="text-white text-center">
+                <h1 className="dark:text-white text-center">
                     <span className="text-blue-500 font-semibold">Next</span> CRM
                 </h1>
             </div>
@@ -61,7 +61,7 @@ export default function Sidebar() {
                         />
 
                         <button
-                            className="mt-5 bg-slate-800 hover:bg-slate-900 w-full p-3 text-red-300 font-black text-md cursor-pointer transition-colors duration-300"
+                            className="mt-5 dark:bg-slate-800 dark:hover:bg-slate-900 hover:bg-slate-100 w-full p-3 dark:text-red-300 text-red-700 font-black text-md cursor-pointer transition-colors duration-300"
                             type="button"
                             onClick={handleLogout}
                         >
