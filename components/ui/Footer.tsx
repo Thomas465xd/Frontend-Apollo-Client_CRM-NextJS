@@ -1,7 +1,11 @@
 'use client';
 import { useEffect, useState } from 'react';
 
-export default function Footer() {
+type FooterProps = {
+    dark?: boolean; 
+}
+
+export default function Footer({ dark }: FooterProps) {
     const [year, setYear] = useState<number | null>(null);
 
     useEffect(() => {
@@ -9,14 +13,14 @@ export default function Footer() {
     }, []);
 
     return (
-        <footer className="flex justify-between bg-gray-100 dark:bg-gray-900 border-t-2 border-gray-300 dark:border-gray-700">
-            <p className="text-center p-4 text-gray-700 dark:text-gray-400">
+        <footer className={`${dark ? "bg-gray-900 border-t-2 border-gray-700" : "bg-gray-100 border-gray-300 dark:bg-gray-900 border-t-2 dark:border-gray-700"} flex justify-between`}>
+            <p className={`text-center p-4 ${dark ? "text-gray-400" : "text-gray-700 dark:text-gray-400"}`}>
                 Client CRM Next - Copyright &copy; {year ?? '----'}
             </p>
-            <p className="text-center p-4 text-gray-700 dark:text-gray-400 text-sm">
+            <p className={`text-center p-4 ${dark ? "text-gray-400" : "text-gray-700 dark:text-gray-400"} text-sm`}>
                 Developed by{' '}
                 <a
-                    className="hover:text-gray-900 dark:hover:text-gray-500 font-semibold transition-colors duration-200"
+                    className={`${dark ? "text-gray-400 hover:text-gray-300" : "hover:text-gray-900 dark:hover:text-gray-500 "} font-semibold transition-colors duration-200`}
                     href="https://github.com/Thomas465xd"
                     target="_blank"
                     rel="noopener noreferrer"

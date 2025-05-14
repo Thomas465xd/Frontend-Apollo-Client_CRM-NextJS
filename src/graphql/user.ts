@@ -6,6 +6,10 @@ export const GET_PROFILE = gql`
             name
             surname
             email
+            role
+            businessName
+            phone
+            address
         }
     }
 `;
@@ -22,15 +26,25 @@ export const CREATE_USER = gql`
 `;
 
 export const UPDATE_USER = gql`
-    mutation updateUser($input: UserInput) {
+    mutation updateUser($input: UpdateUserInput) {
         updateUser(input: $input) {
             id
             name
             surname
             email
+            role
+            businessName
+            phone
+            address
         }
     }
 `;
+
+export const UPDATE_PASSWORD = gql`
+    mutation changePassword($input: PasswordInput) {
+        changePassword(input: $input)
+    }
+`
 
 export const LOGIN_USER = gql`
     mutation AuthUser($input: AuthInput) {

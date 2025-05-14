@@ -5,6 +5,7 @@ export const GET_BEST_CLIENTS = gql`
         getBestClients {
             client {
                 name
+                surname
                 email
             }
             totalOrders
@@ -23,6 +24,30 @@ export const GET_BEST_SELLERS = gql`
             }
             totalOrders
             totalSales
+        }
+    }
+`
+
+export const GET_RECENT_ACTIVITY = gql`
+query getRecentActivity {
+    getRecentActivity {
+            ... on Order {
+                createdAt
+                total
+                client {
+                    name
+                }
+            }
+            ... on Product {
+                name
+                createdAt
+                price
+            }
+            ... on Client {
+                name
+                createdAt
+                email
+            }
         }
     }
 `

@@ -5,6 +5,7 @@ import { Poppins } from "next/font/google";
 import ApolloProvider from "@/components/providers/ApolloProvider";
 import ToastProvider from "@/components/providers/ToastProvider";
 import OrderState from "@/src/context/orders/OrderState";
+import { Providers } from "@/components/providers/ThemeProvider";
 
 const poppins = Poppins({
 	weight: ["400", "600", "700"], // or whichever weights you need
@@ -26,10 +27,12 @@ export default function RootLayout({
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${poppins.variable} font-sans antialiased`}>
 				<ApolloProvider>
-                    <OrderState>
-                        <ToastProvider />
-                        {children}
-                    </OrderState>
+                    <Providers>
+                        <OrderState>
+                            <ToastProvider />
+                            {children}
+                        </OrderState>
+                    </Providers>
                 </ApolloProvider>
 			</body>
 		</html>

@@ -62,7 +62,7 @@ export default function BestClients() {
 	const getBestClients = data?.getBestClients || [];
 
 	const clientsGraph: ClientGraphData[] = getBestClients.map((client) => ({
-		name: client.client.name,
+		name: client.client.name + " " + client.client.surname,
 		email: client.client.email,
 		totalOrders: client.totalOrders,
 		totalSpent: client.totalSpent,

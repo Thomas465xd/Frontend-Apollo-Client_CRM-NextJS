@@ -23,6 +23,10 @@ export const userSchema = z.object({
     name: z.string(), 
     surname: z.string(), 
     email: z.string().email(),
+    phone: z.string().optional(), 
+    businessName: z.string().optional(), 
+    role: z.string().optional(), 
+    address: z.string().optional(),
 })
 
 // Client Schemas
@@ -110,6 +114,7 @@ export const bestSellerSchema = z.object({
 export const bestClientSchema = z.object({
     client: z.object({
         name: z.string(), 
+        surname: z.string(),
         email: z.string(),
     }),
     totalOrders: z.number(),

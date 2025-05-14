@@ -55,7 +55,7 @@ export default function OrderCard({ order }: OrderCardProps) {
 			case "PENDING":
 				return "bg-gradient-to-r from-orange-600 to-yellow-400";
 			case "COMPLETED":
-				return "bg-gradient-to-r from-green-500 to-blue-800";
+				return "bg-gradient-to-r from-indigo-500 to-blue-800";
 			case "CANCELLED": // mind spelling consistency
 				return "bg-gradient-to-r from-red-700 to-orange-600";
 			default:
@@ -139,7 +139,7 @@ export default function OrderCard({ order }: OrderCardProps) {
 
     return (
 		<div className="my-6 rounded-md shadow-lg bg-gradient-to-br dark:from-blue-900 dark:via-slate-600 dark:to-blue-900 from-blue-500 via-slate-400 to-blue-500 dark:p-px p-0.5">
-			<div className="bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 from-slate-300 via-slate-100 to-blue-100 rounded-md p-6 md:grid md:grid-cols-2 md:gap-8 h-full">
+			<div className="bg-gradient-to-br dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 from-slate-100 via-slate-100 to-blue-100 rounded-md p-6 md:grid md:grid-cols-2 md:gap-8 h-full">
 				{/* Client Information */}
 				<div className="mb-6 md:mb-0 flex flex-col h-full">
 					{/* Client details */}
@@ -264,9 +264,9 @@ export default function OrderCard({ order }: OrderCardProps) {
 							{orderItems.map((item) => (
 								<div
 									key={item.id}
-									className="bg-gradient-to-r from-gray-800 to-gray-900 p-4 rounded-md shadow-md"
+									className="bg-gradient-to-r dark:from-gray-800 dark:to-gray-900 from-slate-50 to-slate-100 p-4 rounded-md shadow-md"
 								>
-									<div className="text-gray-300 flex-1">
+									<div className="dark:text-gray-300 flex-1">
 										Product:{" "}
 										<span className="font-semibold text-blue-400">
 											{item.name}
@@ -274,26 +274,26 @@ export default function OrderCard({ order }: OrderCardProps) {
 									</div>
 
 									<div className="grid grid-cols-2 gap-2">
-										<div className="text-gray-300">
+										<div className="dark:text-gray-300">
 											Quantity:{" "}
 											<span className="font-semibold ">
 												{item.quantity}
 											</span>
 										</div>
-										<div className="text-gray-300">
+										<div className="dark:text-gray-300">
 											Price:{" "}
 											<span className="font-semibold ">
 												{formatPriceToUSD(item.price)}
 											</span>
 										</div>
-										<div className="text-gray-300">
+										<div className="dark:text-gray-300">
 											Discount:{" "}
 											<span className="font-semibold ">
 												{item.discount}%
 											</span>
 										</div>
-										<div className="text-gray-300">
-											Total:{" "}
+										<div className="dark:text-gray-300">
+											Subtotal:{" "}
 											<span className="font-semibold ">
 												{formatPriceToUSD(
 													item.priceWithDiscount ?? 0

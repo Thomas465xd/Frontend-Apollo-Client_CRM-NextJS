@@ -24,7 +24,7 @@ export default function AuthLayout({
                 </div>
             </main>
 
-            <Footer />
+            <Footer dark />
         </>
 	);
 }

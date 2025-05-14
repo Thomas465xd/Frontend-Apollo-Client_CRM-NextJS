@@ -103,7 +103,7 @@ export default function Home() {
                         </Link>
                         <Link
                             href="/home/analytics"
-                            className="flex items-center gap-2 p-4 bg-orange-600 hover:bg-orange-700 text-white rounded-xl transition-transform hover:scale-[1.02] shadow-sm"
+                            className="flex items-center gap-2 p-4 bg-indigo-800 hover:bg-indigo-900 text-white rounded-xl transition-transform hover:scale-[1.02] shadow-sm"
                         >
                             <BarChart2 size={18} />
                             <span className="text-sm font-medium">View Reports</span>

@@ -72,7 +72,7 @@ export default function RegisterForm() {
 
 	return (
 		<form
-			className="space-y-5 bg-white shadow-lg rounded-lg p-6 lg:p-10 border border-gray-200"
+			className="space-y-5 dark:bg-gray-800 bg-white shadow-lg rounded-lg p-6 lg:p-10 border border-gray-200"
 			onSubmit={handleSubmit(handleRegister)}
             suppressHydrationWarning
 		>
