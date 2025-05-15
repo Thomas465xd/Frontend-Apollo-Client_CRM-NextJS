@@ -1,3 +1,5 @@
+import GeneralActivity from "@/components/home/GeneralActivity";
+import RecentActivity from "@/components/home/RecentActivity";
 import { BarChart2, Info, PackagePlus, Plus, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 
@@ -15,60 +17,11 @@ export default function Home() {
 			{/* Dashboard Overview */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-4 mx-4">
 				{/* Quick Stats */}
-				<div className="p-6 dark:bg-gray-800 bg-white rounded-lg shadow">
-					<h3 className="text-xl font-semibold mb-4">At a Glance</h3>
-					<div className="space-y-3">
-						<div className="flex justify-between">
-							<span>Active Clients</span>
-							<span className="font-bold">24</span>
-						</div>
-						<div className="flex justify-between">
-							<span>Pending Orders</span>
-							<span className="font-bold">7</span>
-						</div>
-						<div className="flex justify-between">
-							<span>Monthly Revenue</span>
-							<span className="font-bold">$12,450</span>
-						</div>
-					</div>
-				</div>
+                <GeneralActivity />
 
 				{/* Recent Activity */}
-				<div className="p-6 dark:bg-gray-800 bg-white rounded-lg shadow">
-					<h3 className="text-xl font-semibold mb-4">
-						Recent Activity
-					</h3>
-					<div className="space-y-3">
-						<div className="text-sm">
-							<p className="font-medium">
-								New order from Acme Corp
-							</p>
-							<p className="text-gray-500 dark:text-gray-400">
-								10 minutes ago
-							</p>
-						</div>
-						<div className="text-sm">
-							<p className="font-medium">
-								Client profile updated: TechSolutions
-							</p>
-							<p className="text-gray-500 dark:text-gray-400">
-								2 hours ago
-							</p>
-						</div>
-						<div className="text-sm">
-							<p className="font-medium">
-								New client added: Global Ventures
-							</p>
-							<p className="text-gray-500 dark:text-gray-400">
-								Yesterday
-							</p>
-						</div>
-					</div>
-				</div>
-
-                {/* Quick Actions */}
-                <div className="p-6 dark:bg-gray-800 bg-white rounded-2xl shadow-lg">
-
+                <div className="md:col-span-2">
+                    <RecentActivity />
                 </div>
 			</div>
 

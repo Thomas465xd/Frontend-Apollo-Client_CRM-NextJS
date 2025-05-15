@@ -121,6 +121,49 @@ export const bestClientSchema = z.object({
     totalSpent: z.number(),
 })
 
+const recentOrderSchema = z.object({
+    createdAt: z.string(),
+    total: z.number(),
+    status: z.string(),
+    client: z.object({
+        name: z.string().nullable(),
+    }),
+});
+
+const recentClientSchema = z.object({
+    name: z.string(),
+    createdAt: z.string(),
+    email: z.string().email(),
+});
+
+const recentProductSchema = z.object({
+    name: z.string(),
+    createdAt: z.string(),
+    price: z.number(),
+});
+
+export const getRecentActivitySchema = z.object({
+    getRecentActivity: z.array(
+        z.union([
+            recentOrderSchema,
+            recentClientSchema,
+            recentProductSchema,
+        ])
+    ),
+});
+
+export const getGeneralActivitySchema = z.object({
+    totalOrders: z.number(),
+    pendingOrders: z.number(),
+    completedOrders: z.number(),
+    cancelledOrders: z.number(),
+    totalRevenue: z.number(),
+    monthlyRevenue: z.number(),
+    totalClients: z.number(),
+    totalProducts: z.number(),
+})
+
+
 // Auth Types
 export type RegisterUserForm = z.infer<typeof registerSchema>
 export type LoginUserForm = z.infer<typeof loginSchema>
@@ -142,3 +185,5 @@ export type Order = z.infer<typeof orderSchema>
 // Analytics Types
 export type BestSeller = z.infer<typeof bestSellerSchema>
 export type BestClient = z.infer<typeof bestClientSchema>
+export type RecentActivityResume = z.infer<typeof getRecentActivitySchema>
+export type GeneralActivityResume = z.infer<typeof getGeneralActivitySchema>

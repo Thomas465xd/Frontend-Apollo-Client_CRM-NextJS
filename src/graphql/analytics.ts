@@ -34,6 +34,7 @@ query getRecentActivity {
             ... on Order {
                 createdAt
                 total
+                status
                 client {
                     name
                 }
@@ -48,6 +49,19 @@ query getRecentActivity {
                 createdAt
                 email
             }
+        }
+    }
+`
+
+export const GET_GENERAL_ACTIVITY = gql`
+    query getGeneralActivity {
+        getGeneralActivity {
+            totalClients
+            totalProducts
+            totalOrders
+            pendingOrders
+            monthlyRevenue
+            totalRevenue
         }
     }
 `
