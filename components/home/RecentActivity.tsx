@@ -29,7 +29,7 @@ export default function RecentActivity() {
 	if(data) return (
 		<div className="p-6 dark:bg-gray-800 bg-white rounded-lg shadow">
 			<h3 className="text-xl font-semibold mb-4">Recent Activity</h3>
-			<div className="space-y-3 flex gap-10">
+			<div className="space-y-3 sm:flex gap-10 ">
 				{recentActivity.map((activity, index) => {
 					// Order
 					if ("total" in activity && "client" in activity) {
