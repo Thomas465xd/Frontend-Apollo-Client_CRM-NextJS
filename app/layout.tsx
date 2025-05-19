@@ -6,7 +6,7 @@ import ApolloProvider from "@/components/providers/ApolloProvider";
 import ToastProvider from "@/components/providers/ToastProvider";
 import OrderState from "@/src/context/orders/OrderState";
 import { Providers } from "@/components/providers/ThemeProvider";
-//import { Analytics } from "@/components/analytics"; // Assuming you have an analytics component
+import { Analytics } from "@vercel/analytics/next"
 
 // Font optimization
 const poppins = Poppins({
@@ -142,6 +142,7 @@ export default function RootLayout({
 					<Providers>
 						<OrderState>
 							<ToastProvider />
+
 							<main className="flex-grow">{children}</main>
 
 							{/* Structured schema data for better search engine understanding */}
@@ -163,11 +164,8 @@ export default function RootLayout({
 								}}
 							/>
 
-							{/* Analytics tracking (only in production)
-							{process.env.NODE_ENV === "production" && (
-								<Analytics />
-							)}
-                            */}
+							{/* Analytics tracking (only in production)*/}
+                            <Analytics />
 						</OrderState>
 					</Providers>
 				</ApolloProvider>
