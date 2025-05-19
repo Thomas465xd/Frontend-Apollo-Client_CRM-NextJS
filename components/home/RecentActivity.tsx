@@ -5,12 +5,15 @@ import Loader from "../ui/Loader";
 import { toast } from "react-toastify";
 import { RecentActivityResume } from "@/src/types";
 import { formatRelativeTime } from "@/src/utils/date";
+import { formatPriceToUSD } from "@/src/utils/price";
 
+/** 
 type RecentActivityProps = {
     small?: boolean,
     medium?: boolean, 
     big?: boolean,
 }
+*/
 
 export default function RecentActivity() {
 	const { data, error, loading } = useQuery<RecentActivityResume>(GET_RECENT_ACTIVITY);
@@ -34,7 +37,7 @@ export default function RecentActivity() {
 							<div key={index} className={`rounded`}>
 								<p className="font-semibold">🧾 Order</p>
                                 <p>Status: <span className={`text-sm ${activity.status === "COMPLETED" ? "text-blue-400" : "text-orange-400"}`}>{activity.status}</span></p>
-								<p>Total: ${activity.total.toFixed(2)}</p>
+								<p>Total: <span className="text-sm font-semibold text-blue-500">{formatPriceToUSD(activity.total)}</span></p>
 								<p>Client: {activity.client?.name ?? "Unknown"}</p>
 								<p className="text-xs text-gray-500">
 									{formatRelativeTime(activity.createdAt)}

@@ -2,9 +2,8 @@ import EditProductForm from "@/components/home/products/EditProductForm";
 import Title from "@/components/ui/Title";
 import Link from "next/link";
 
-export default async function ProductsEdit({ params }: { params: { productId: string } }) {
-
-    const { productId } = await params; // Extract clientId from params
+export default async function EditProduct({params}: {params: Promise<{ productId: string }>}) {
+    const { productId } = await params;
 
     return (
         <div className="">

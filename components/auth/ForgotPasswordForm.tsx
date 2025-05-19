@@ -9,12 +9,12 @@ export default function ForgotPasswordForm() {
         email: ""
     }
 
-    const { register, handleSubmit, watch, reset, formState: { errors } } = useForm({ 
+    const { register, handleSubmit, reset, formState: { errors } } = useForm({ 
         defaultValues: initialValues
     })
 
-    const handleForgotPassword = (formData: ForgotPasswordForm) => {
-        console.log(formData)
+    const handleForgotPassword = () => {
+        reset(initialValues)
     }
 
 	return (

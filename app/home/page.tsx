@@ -1,3 +1,4 @@
+import PerformanceOverviewChart from "@/components/home/analytics/PerformanceChart";
 import GeneralActivity from "@/components/home/GeneralActivity";
 import RecentActivity from "@/components/home/RecentActivity";
 import { BarChart2, Info, PackagePlus, Plus, ShoppingCart } from "lucide-react";
@@ -66,17 +67,7 @@ export default function Home() {
 
 				{/* Performance Overview */}
 				<div className="p-6 dark:bg-gray-800 bg-white rounded-lg shadow">
-					<h3 className="text-xl font-semibold mb-4">
-						Performance Overview
-					</h3>
-					<div className="h-48 flex items-center justify-center">
-						<p className="text-center text-gray-500 dark:text-gray-400">
-							[Sales Chart Visualization]
-						</p>
-					</div>
-					<p className="text-sm text-center mt-2">
-						Sales are up 12% compared to last month
-					</p>
+                    <PerformanceOverviewChart />
 				</div>
 			</div>
 

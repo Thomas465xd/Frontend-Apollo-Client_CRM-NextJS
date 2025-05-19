@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Mail, Phone, Map, IdCard, CalendarArrowUp, PenLineIcon, XCircleIcon, BookCheck, User, ReceiptIcon } from "lucide-react";
+import { Mail, Phone, Map, IdCard, CalendarArrowUp, PenLineIcon, XCircleIcon, BookCheck, ReceiptIcon } from "lucide-react";
 import { Order } from "@/src/types";
 import { copyToClipboard } from "@/src/utils/copy";
 import Dialog from "@/components/ui/Dialog";

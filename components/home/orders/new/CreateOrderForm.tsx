@@ -10,7 +10,6 @@ import AsignOrderClient from './AsignOrderClient';
 import AsignOrderProducts from './AsignOrderProducts';
 import OrderResume from './OrderResume';
 import OrderTotal from './OrderTotal';
-import { Order } from '@/src/types';
 
 export default function CreateOrderForm() {
 

@@ -18,7 +18,7 @@ export default function GeneralActivity() {
     const stats = [
         { label: "Total Products", value: data?.getGeneralActivity.totalProducts || 0 },
         { label: "Total Clients", value: data?.getGeneralActivity.totalClients || 0 },
-        { label: "Pending Orders", value: data?.getGeneralActivity.pendingOrders || 0},
+        { label: "Total Orders", value: data?.getGeneralActivity.totalOrders || 0},
         { label: "Monthly Revenue", value: `${formatPriceToUSD(data?.getGeneralActivity.monthlyRevenue || 0)}` },
     ];
 

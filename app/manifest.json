@@ -1,0 +1,23 @@
+{
+	"name": "CRM Client Administration",
+	"short_name": "CRM Admin",
+	"description": "Professional CRM solution for efficient client management, order tracking, and business analytics.",
+	"start_url": "/auth/login",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#0f172a",
+	"icons": [
+		{
+			"src": "/icon-192x192.png",
+			"sizes": "192x192",
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{
+			"src": "/icon-512x512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	]
+}

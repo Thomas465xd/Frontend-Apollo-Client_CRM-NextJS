@@ -60,6 +60,8 @@ export const GET_GENERAL_ACTIVITY = gql`
             totalProducts
             totalOrders
             pendingOrders
+            cancelledOrders
+            completedOrders
             monthlyRevenue
             totalRevenue
         }
